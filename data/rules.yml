@@ -1,0 +1,65 @@
+version: "3.1"
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: welcome user
+  conversation_start: true  # this rule only applies at the beginning of a conversation
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_client_therapist
+
+#- rule: ask user if they want to talk to human agent
+#  steps:
+#    - intent: nlu_fallback
+#    - action: utter_nlu_fallback_test
+
+- rule: ask user if they want to talk to human agent
+  steps:
+  - intent: nlu_fallback
+  - action: action_default_fallback
+
+
+
+
+
+# Ask Test Name
+#- rule: anytime the intent is ask_test_name
+#  steps:
+#  - intent: ask_test_name
+#  - action: action_test_catalog
+#  - action: action_reset_slot
+#
+#- rule: search test by age
+#  steps:
+#  - intent: test_search_age
+#  - action: utter_test_search_age
+#  - action: action_test_search_age
+#  - action: action_reset_slot
+#  - action: utter_feedback
+
+# Test Search rule
+#- rule: Activate test search form
+#  steps:
+#  - intent: test_search_form
+#  - action: action_form_test_search
+#  - active_loop: action_form_test_search
+
+#- rule: going back to previous state
+#  steps:
+#  - intent: go_back
+#  - action: action_back
+
+
+#- rule: respond to question
+#  steps:
+#  - intent: question
+#  - action: utter_question
+#  - action: utter_feedback
+#  - action: utter_more_question
+

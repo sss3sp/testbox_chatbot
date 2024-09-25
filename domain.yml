@@ -1,0 +1,461 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - question
+  - new_question
+  - question_credit_use
+  - thanks
+  - feedback
+  - feedback_therapist
+  - feedback_yes
+  - feedback_yes_therapist
+  - feedback_no
+  - ask_question
+  - client_therapist
+  - fallback_human
+  - therapist
+  - konto_abonnements
+  - test_battery_menu
+  - test_battery_def
+  - test_battery_usage
+  - google_sheet
+  - test_catalog
+  - test_name
+  - ask_test_name
+  - test_search_disorder_menu
+  - test_search_disorder
+  - test_search_disorder_name
+  - test_search_age
+  - test_search_age_menu
+  - test_catalog_menu
+
+
+
+entities:
+  - test
+  - age_group
+  - disorder
+
+slots:
+  test:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: test
+  age_group:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: age_group
+  disorder:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: disorder
+
+#forms:
+#  action_form_test_search:
+#    required_slots:
+#        - age_group
+#        - disorder
+
+#slots:
+#  handoff_to:
+#      type: text
+#      influence_conversation: false
+#      mappings:
+#      - type: from_entity
+#        entity: handoff_to
+
+responses:
+  utter_greet:
+  - text: "Guten Tag. Haben Sie Fragen? Wir helfen gerne!"
+
+#First option to user
+  utter_client_therapist:
+  - text: "Sind Sie ein ..."
+    buttons:
+      - title: "Kunde"
+        payload: /ask_question
+      - title: "Psychotherapeut"
+        payload: /therapist
+
+#Ask any question
+  utter_ask_question:
+  - text: "Bitte schreiben Sie Ihre Frage"
+
+
+#If the user select therapist, then therapist menu
+  utter_therapist:
+  - text: "An welchen der folgenden Themen sind Sie interessiert?"
+    buttons:
+      - title: "Konto & Abonnements"
+        payload: /konto_abonnements
+      - title: "Test Catalog"
+        payload: /test_catalog_menu
+      - title: "Test-Batterie"
+        payload: /test_battery_menu
+      - title: "Andere Frage"
+        payload: /ask_question
+
+#Therpaist menu options with suggested questions
+  utter_konto_abonnements:
+  - text: "Wie kann ich Ihnen helfen?"
+    buttons:
+      - title: "Kann ich ein bestehendes Guthaben verwenden, wenn ich mein Konto erweitere?"
+        payload: /question_credit_use
+      - title: "Aktuelle Abonnementpläne"
+        payload: /ask_question
+      - title: "Andere Frage"
+        payload: /ask_question
+      - title: "Zurückgehen"
+        payload: /therapist
+
+  utter_test_battery_menu:
+  - text: "Wie kann ich Ihnen helfen?"
+    buttons:
+      - title: "Was ist eine Testbatterie?"
+        payload: /test_battery_def
+      - title: "Kann ich die Testbatterie für bezahlte Tests verwenden?"
+        payload: /test_battery_usage
+      - title: "Andere Frage"
+        payload: /ask_question
+      - title: "Zurückgehen"
+        payload: /therapist
+
+  utter_test_catalog_menu:
+  - text: "Wie kann ich Ihnen helfen?"
+    buttons:
+      - title: "Suchtests für Zielgruppen"
+        payload: /test_search_age_menu
+      - title: "Ich möchte Informationen über einen Test"
+        payload: /test_catalog
+      - title: "Tests für eine Störung"
+        payload: /test_search_disorder
+      - title: "Andere Frage"
+        payload: /ask_question
+      - title: "Zurückgehen"
+        payload: /therapist
+
+  utter_question_credit_use:
+  - text: "Ja! das Praxisguthaben kann weiterverwendet werden für die Durchführung lizenzierter Verfahren."
+
+  utter_test_battery_def:
+  - text: "In einer Testbatterie können Sie alle Testpakete zusammenstellen. Dies können Sie unter \"Meine Praxis\", \"Batterien\", \"Neue Batterie\" tun. Oder ganz einfach im „Testkatalog“, „Batterien“, „Batterie hinzufügen“
+Videoanleitung: https://youtu.be/Ipp4WLntbIc"
+
+  utter_test_battery_usage:
+  - text: " Sie können alle auf der testbox verfügbaren Verfahren zu einer Testbatterie hinzufügen."
+
+
+#Feedback after every questions
+  utter_feedback:
+  - text: "Hat es geholfen?"
+    buttons:
+      - title: "Ja"
+        payload: /feedback_yes
+      - title: "Nein"
+        payload: /feedback_no
+
+  utter_feedback_therapist:
+    - text: "Hat es geholfen?"
+      buttons:
+        - title: "Ja"
+          payload: /feedback_yes_therapist
+        - title: "Nein"
+          payload: /feedback_no
+
+  utter_feedback_yes:
+  - text: "Das ist wirklich toll. Haben Sie noch weitere Fragen?!"
+    buttons:
+      - title: "Ja,ich habe"
+        payload: /ask_question
+      - title: "Nein, Danke"
+        payload: /thanks
+
+  utter_feedback_yes_therapist:
+  - text: "Das ist wirklich toll. Haben Sie noch weitere Fragen?!"
+    buttons:
+      - title: "Ja,ich habe"
+        payload: /therapist
+      - title: "Nein, Danke"
+        payload: /thanks
+
+  utter_feedback_no:
+  - text: "Tut mir leid, ich konnte Ihnen nicht helfen. Benötigen Sie Hilfe von unserem Kundendienstmitarbeiter?"
+    buttons:
+      - title: "Ja"
+        payload: /fallback_human
+      - title: "Nein, Danke"
+        payload: /thanks
+
+#Human handover
+  utter_fallback_human:
+  - text: "Ich leite Sie an einen unserer Kundendienstmitarbeiter weiter. Bitte warten Sie einen Moment..."
+
+#Questions from Help Page
+  utter_question/test_assignment_remote_device:
+  - text: "Sobald der Klient die Durchführung des Testverfahrens erfolgreich abgeschlossen hat, werden Sie hierüber per E-Mail benachrichtigt. Darüber hinaus können Sie den Zustand einer Durchführung stets unter “Meine Tests” einsehen. Dort finden Sie in der Leiste auf der linken Seite die einzelnen Zustände einer Testdurchführung:\n\n1. Direkt nachdem das Testverfahren dem Klienten zugewiesen wurde, erscheint die Durchführung in der Kategorie “Vorbereitet”.\n2. Sobald der Klient mit der Durchführung begonnen hat, wird diese automatisch in die Kategorie “Gestartet” verschoben.\n3. Nach erfolgreichem Abschluss der Durchführung können Sie die Ergebnisse schließlich unter “Ergebnisse” einsehen."
+
+  utter_question/def_test_assignment_remote_device:
+  - text: "Die Zuweisung „Auf einem entfernten Gerät“ dient zur Durchführung in Ihrer Praxis auf einem nahegelegenen Tablet oder einem Laptop. Sie können zur Durchführung entweder den QR-Code einscannen oder den Testschlüssel eingeben. Gehen Sie hierzu auf testbox.de und wählen Sie „Testschlüssel“. Hierzu dürfen Sie auf dem nahegelegenen Gerät nicht eingeloggt sein.
+Sie können alternativ die Option wählen „auf diesem Gerät durchführen“ und „später durchführen“ und dann die Durchführung auf dem Tablet mit eingeloggtem Account unter „Meine Tests“, „vorbereitet“ finden."
+
+  utter_question/add_employee_slots:
+  - text: '**Für Pilotkunden**\n\nDie im Pilotkundenvertrag vereinbarte Anzahl an Nutzern Ihrer Praxis können Sie jederzeit unter “Meine Praxis” → “Mitarbeiter” einsehen. Die Anzahl der Zeilen entspricht der Anzahl an Mitarbeiterplätzen und jede (unbesetzte) Zeile kann rechts mit dem Button “Einladen” mit einem Nutzer besetzt werden. Falls Sie weitere Mitarbeiterplätze benötigen, wenden Sie sich bitte an support@testbox.de."
+Für Basic und Professionell und Enterprise:
+Das hinzufügen mehrerer Mitarbeiter*innen ist seit der Abo-Umstellung auch für Basic und Professionell Kund*innen möglich. Die Anzahl der hinzuzufügenden Mitarbeiter*innen ist hierbei nicht begrenzt. Anzahl an Nutzern Ihrer Praxis können Sie jederzeit unter “Meine Praxis” → “Mitarbeiter” einsehen und anpassen. Klicken Sie in einem freien Slot rechts auf “Einladen”. Geben Sie im Dialogfeld die E-Mail-Adresse des neuen Mitarbeiters ein und klicke auf “Benutzer einladen”"
+Videoanleitung: https://youtu.be/SHa2QLBvpfg 
+
+Zudem können Sie für jede/n einzelne/n Mitarbeiter*in die Berechtigungen für die testbox anpassen. 
+Für Starter:
+Leider ist es im Starter-Abo nicht möglich mehrere Mitarbeiterplätze hinzuzufügen. Die kostenfreie Variante, bietet Ihnen die Möglichkeit monatlich 5 Testdurchführungen kostenfrei zu nutzen und ist nicht zur Anwendung im größeren Rahmen gedacht. In den Abo-Optionen Basic und Professionell können Sie eine unbegrenzte Zahl an Mitarbeiter*innen hinzufügen und haben ein erhöhtes Testdurchführungsvolumen.'
+
+  utter_question/export_test_results:
+  - text: "Der Ergebnisexport im PDF Format ist für alle Abos von Basic bis Enterprise möglich. Testergebnisse können nach erfolgreich abgeschlossener Testdurchfürhung entweder als PDF- oder als CSV-Datei exportiert werden.\n\n1. Klicken Sie auf “Meine Tests”, dann links auf “Ergebnisse”\n2. Suchen Sie die Testdurchführung, die Sie exportieren wollen und klicken rechts auf “Anzeigen”\n3. Im unteren linken Bildschirmbereich klicken Sie auf PDF-Export oder auf CSV-Export.\n4. Wenn Sie sich für einen PDF-Export entscheiden, erscheint ein Dialogfeld, in dem die Ihren Export noch anpassen können, sodass im PDF nur die für Sie relevanten Details enthalten sind. Videoanleitung: https://youtu.be/4zDPlslKVlo 
+Im Starter-Abo ist der PDF Export nicht enthalten."
+
+  utter_question/starter_access_costs:
+  - text: "Nein. Das Starter-Abo in der testbox ist komplett unverbindlich und bietet die Möglichkeit viele Testverfahren und Funktionen der testbox auszuprobieren. Sie haben die Möglichkeit 5 kostenfreie Durchführungen pro Monat zu nutzen und so die Anwendung kennenzulernen."
+
+  utter_question/supported_devices:
+  - text: "Die Fragebögen und Screenings können auf Endgeräten wie Tablet, Laptop oder Handy durchgeführt werden. Wobei wir die Durchführung am Smartphone nicht empfehlen. 
+Die graphomotorischen Verfahren können auf einem Tablet mit Stiftfunktion durchgeführt werden, da Sie meist Nachspuraufgaben u.ä. beinhalten. 
+Viele der Neuropsychologischen Verfahren werden am besten auf Tablets durchgeführt. Wir raten hier von der Nutzung von Apple Geräten ab. 
+Das hängt von der Art des Testverfahrens, vom Betriebssystem (Windows, MacOS, Linux, iOS, Android) und vom verwendeten Browser (Chrome, Firefox, Edge...) ab.\n\nEine vollständige Übersicht und ob Ihr Gerät unterstützt wird, können Sie hier einsehen: [ ]{link}"
+
+  utter_question/find_avv:
+  - text: "Die von Ihnen gezeichnete AVV finden Sie unter \"Meine Praxis\" im Bereich \"Ihre Vertragsdokumente\"."
+
+  utter_question/mark_tests_favorite:
+  - text: "Ja, das geht!\n\nDamit Sie häufig verwendete Tests schneller finden können, können Sie diese im [Testkatalog](https://www.testbox.de/testkatalog) auf der rechten Seite mit einem Stern markieren und finden diese Verfahren auf der linken Seite unter dem Eintrag “Favoriten”."
+
+  utter_question/guideline_testing:
+  - text: "Ja!\n\nVerfahren, die in einer Leitlinie stehen, sind im [Testkatalog](https://testbox.de/test) mit einem zusätzlichen Symbol (in der Spalte \"Form\") gekennzeichnet. Auf der Detailseite des jeweiligen Verfahrens sind die entsprechenden Leitlinien zusätzlich auch namentlich aufgeführt."
+
+  utter_question/delete_prepared_tests:
+  - text: "Sie können die vorbereiteten Tests wieder löschen, indem Sie unter \"Meine Tests\" links auf \"Vorbereitet\" klicken und dann beim entsprechenden Test ganz rechts auf den Button mit dem Dreieck klicken und dort \"Rückerstattung\" auswählen."
+
+  utter_question/data_security:
+  - text: "Der Schutz von sensiblen personenbezogenen Daten hat bei der testbox höchste Priorität.\n\nDie Datenübertragung zwischen Klient/-innen und Therapeut/-innen findet stets über eine verschlüsselte Verbindung statt.\n\nUnsere nach ISO 27001 zertifizierten Server stehen in Deutschland und die testbox ist vollständig DSGVO-konform. Außerdem handelt es sich bei der testbox um ein Medizinprodukt mit CE-Zertifizierung.\n\nWeitere wichtige Maßnahmen:\n- Strenge Passwortrichtlinien\n- Zwei-Faktor-Authentifizierung\n- Automatische Sperrung nach zu vielen Fehlanmeldungen\n- Die Kommunikation über die testbox ist vollständig verschlüsselt\n- Möglichst wenige Administratoren\n- Umfängliches Zugriffsberechtigungskonzept"
+
+  utter_question/test_execution_clients_device:
+  - text: "Wenn die Testdurchführung (oder Batteriedurchführung) auf einem entfernten Gerät stattfinden soll, z.B. bei dem/der Klient/-in zu Hause, wählen Sie bei der Testzuweisung im Abschnitt \"Zielgerät auswählen\" die Option \"Zu Hause\".\n\n Sie haben drei Optionen:\n- **Wir versenden eine E-Mail an die angegebene Adresse**\nBei dieser Option stellen Sie uns die E-Mail-Adresse des/der Klient/-in zur Verfügung und wir versenden die Anweisungen zur Testdurchführung an die angegebene E-Mail-Adresse. Sie können die E-Mailadresse auch optional für die Klient*in hinterlegen\n*Tippen Sie die E-Mail-Adresse des/der Klient/-in in das Eingabefeld \"E-Mail\" ein und klicken Sie unten rechts auf \"Abschließen\".*\n\n- **Sie erhalten einen Link und versenden diesen selbst**\nDen Zugang zur Testdurchführung in From eines Links können Sie auch selbst über einen Kommunikationskanal Ihrer Wahl an Ihre/-n Klient/-in versenden. Diese Option empfiehlt sich beispielsweise dann, wenn es mit der obigen Option beim automatisierten Versenden von E-Mails Probleme gibt.\n*Kopieren Sie den Link aus der Textzeile heraus und fügen ihn bspw. in eine an ihre/-n Klient/-in gerichtete E-Mail in Ihrem E-Mail-Programm ein.* 
+Sie drucken einen QR-Code: Der/Die Patient*in befindet sich in Ihrer Praxis und Sie möchten gerne den QR Code ausdrucken, um diesen direkt mitzugeben. "
+
+  utter_question/referral_bonus:
+  - text: "Alle registrierten Kunden (Basic- oder Professionell-Abonnement) auf der testbox haben die Möglichkeit, vom **Empfehlungsbonus in Höhe von 30€** zu profitieren.\n\nUnd so einfach funktionierts:\n1. Sie überzeugen eine/-n Kollegen/-in von der testbox.\n2. Der/die Kolleg/-in registriert sich auf der testbox und schließt ein Professionell-Jahresabo ab.\n3. Der/die neu registrierte Kolleg/-in schreibt uns binnen 10 Tagen eine E-Mail mit Ihrem Namen und dem Betreff \"Empfehlungsbonus\" an [support@testbox.de](mailto:support@testbox.de).\n4. Wir schreiben Ihnen 30€ Praxisguthaben auf Ihr testbox-Konto gut!"
+
+  utter_question/recharge_practice_balance:
+  - text: "Damit Sie nicht bei jeder Transaktion Ihre Bankdaten eingeben müssen, können Sie Ihre Praxis auf der testbox mit einem Guthaben aufladen. Dieses Praxisguthaben können Sie dann bequem als Zahlungsmedthode angeben. So können Sie einfach die lizenzierten Verfahren abbuchen lassen.\n\nUm Ihr Praxisguthaben aufzuladen, klicken Sie oben auf \"Meine Praxis\" und dann in der Mitte auf den Betrag neben \"Praxis-Guthaben\" und dann auf \"Praxis-Guthaben aufladen\"."
+
+  utter_question/billing_psychological_tests:
+  - text: "Testbasierte Diagnostik mit der testbox lohnt sich nicht nur klinisch, sondern auch wirtschaftlich.\n\n**Beispielrechnung**\n**30 Patienten** durchschnittlich parallel in Behandlung\n**12 Monate** durchschnittliche Behandlungsdauer\n**1092 maximale Punkte** pro Patient und Quartal\nAbrechnungspotenzial von **3.911,93 €** pro Quartal (15.647,72 € pro Jahr)\n\nDie **testbox** unterstützt Sie bei der effizienten Durchführung von Testdiagnostik. Lassen Sie sich die Vorteile nicht entgehen und schöpfen Sie Ihr volles Abrechnungspotenzial aus.\n\nDie Anwendung standardisierter Diagnostikverfahren können je 5 Minuten über EBM 35600 abgerechnet werden (https://www.kbv.de/tools/ebm/html/35600_2901017718635900154912.html). Maßgeblich für die Dauer (also wie oft die Ziffer abgerechnet wird) ist der Umfang des Verfahrens. Bei der Festlegung berücksichtigen Sie Vorbereitung, Durchführung, Auswertung, Interpretation und Erläuterung des Verfahrens sowie die besonderen Bedingungen des Patienten.\n\n**Obligatorischer Leistungsinhalt:**\n- Anwendung standardisierter Testverfahren \n- Auswertung eines Testverfahrens\n - Schriftliche Aufzeichnung\n- Dauer mindestens 5 Minuten\n\n**Wie viel kann abgerechnet werden?**\nJe nach Phase\n- Probatorik – beliebig viele\n- Therapie\n  - Kurzzeit – bis zu 3\n  - Langzeit – bis zu 7n- Schlussphase – beliebig viele\n- Gedeckelt pro Quartal und Patient\n  - 1.636 Punkte für KJP\n  - 1.092 Punkte für PP"
+
+  utter_question/prepared_test:
+  - text: "Wenn Sie „später durchführen“ wählen wird der Test dem Klienten/ der Klientin zugewiesen und Sie können diesen unter „Meine Tests“, „vorbereitet“ starten oder in der Klientenliste bei dem entsprechenden Klienten/der Klientin unter „vorbereitet“ finden."
+
+  utter_question/test_battery_coin:
+  - text: "Für die Durchführung einer Batterie werden immer so viele Testcoins abgezogen, wie die Anzahl der beinhalteten Tests ist."
+
+  utter_question/create_test_battery:
+  - text: "Anbei finden Sie hierzu eine Videoanleitung: https://youtu.be/Ipp4WLntbIc "
+
+  utter_question/test_start:
+  - text: "Anbei finden Sie hierzu eine Videoanleitung: https://youtu.be/ZpXS3nSCWuM"
+
+  utter_question/test_request:
+  - text: "Sie können Testanfragen über die testbox direkt oder über tests@testbox.de stellen. Anbei finden Sie hierzu auch eine Videoanleitung: https://youtu.be/zlRRu4fzrGU"
+
+  utter_question/hogrefe:
+  - text: "Derzeit bieten wir keine Verfahren vom Hogrefe Verlag an. Schauen Sie gerne im Testkatalog oder sprechen Sie uns an, wenn Sie geeignete Alternativen zu Ihnen bekannten Verfahren suchen."
+
+  utter_question/licensed_procedure_cost:
+  - text: "Die Lizenzgebühren lizenzierter Verfahren werden zusätzlich erhoben und an die Lizenzinhaber weitergegeben."
+#
+#  utter_new_question/test_evaluation_cost:
+#  - text: "Nein bei uns ist die Auswertung eines Tests immer mit dabei und beeinflusst nicht die Kosten."
+#
+#  utter_new_question/map_test_question:
+#  - text: "Senden Sie uns gerne eine Anfrage hierzu an tests@testbox.de und wir prüfen die Digitalisierungsmöglichkeiten und den Umfang Ihres Fragebogens, sodass wir Ihnen ein individuelles Angebot stellen können. Sie können das Verfahren auch für die gesamte testbox freigeben, wenn Sie es veröffentlichen möchten und es den Anforderungen entspricht."
+#
+#  utter_new_question/subscription_options:
+#  - text: "bei der testbox wählen Sie das für Sie passendste Abo-Modell. Dabei wählen Sie aus, wie viele Durchführungen Sie benötigen und welche Funktionen Ihnen wichtig sind. So haben Sie die laufenden Kosten immer im Blick und zahlen dann nur noch die ggf. anfallenden Lizenzgebühren der lizenzierten Verfahren.
+#-	Wir unterscheiden zwischen einem kostenfreien Startermodell, bei dem Sie 5 Durchführungen pro Monat starten und auswerten können, 2 festen Optionen für kleinere und größere Praxen, sowie einer kompletten Individuallösung, die Sie gemeinsam mit uns abstimmen können.
+#-	Im Basic Abo sind monatlich 50 Testdurchführungen beinahltet und im Professional-Abo 100.
+#-	Das Ganze, inkl. der Preise, finden Sie hier auch noch auf unserer Webseite."
+#
+#  utter_new_question/professional_subscription:
+#  - text: "Das Professionell-Abo kostet im Jahresvertrag monatlich 85 € und in einem monatlich kündbaren Tarif 90€"
+#  utter_new_question/basic_subscription:
+#  - text: "Das Basic-Abo kostet in einem Jahresvertrag 45€ pro Monat und in einem monatlich künbaren Tarif 50€ pro Monat."
+#  utter_new_question/enterprise_subscription:
+#  - text: "Das Enterprise Abo ist für große Praxen und Kliniken gedacht, welche eine Individuelle Lösung und mehr als 100 Testdurchführungen pro Monat benötigen."
+#
+#  utter_new_question/language_procedure:
+#  - text: "Derzeit gibt es auf der testbox hauptsächlich Verfahren in der deutschen Sprache und einige englischsprachige Verfahren. Wenn Sie einen speziellen Wunsch haben stellen Sie gerne eine Testanfrage über tests@testbox.de und wir prüfen Ihr Anliegen. Gerne senden wir dem Autor/ der Autorin eine Anfrage zur Digitalisierung."
+#
+#  utter_new_question/test_digitized:
+#  - text: "Schreiben Sie uns gerne eine Nachricht an tests@testbox.de wir erklären Ihnen gerne alles weitere. Zunächst bekommen Sie von uns einen Fragebogen indem Sie alle nötigen Angaben zu Ihrem Verfahren und Ihren Lizenzwünschen angeben können und wir prüfen die Digitalisierungsmöglichkeit."
+#
+#  utter_new_question/test_publish:
+#  - text: "Wir legen höchsten Wert auf Datenschutz und wahren das Urheberrecht und Lizenzrecht der Autoren, deren Verfahren wir auf unserer Plattform abbilden dürfen mit höchster Priorität. Sie können mit uns gemeinsam Evaluieren was für Sie die beste Option ist."
+#
+  utter_new_question/clients:
+  - text: "Klicken Sie auf den erhaltenen Link oder kopieren Sie diesen und fügen Sie ihn in Ihrem Browserfenster ein. Wenn Sie einen QR-Code oder Lizenzschlüssel erhalten haben sehen Sie auf der testbox.de Startseite den Button „Testschlüssel“. Hier können Sie den Code einscannen oder eingeben. Eine Anmeldung ist für die Durchführung nicht nötig."
+
+  utter_test_catalog:
+  - text: "Bitte Schriben die Test name"
+
+# test_search_form
+  utter_test_search_age_menu:
+  - text: "Bitte wählen Sie die Zielgruppe:"
+    buttons:
+      - title: "Senioren"
+        payload: '/test_search_age {"age_group": "Senioren"}'
+      - title: "Jugendliche"
+        payload: '/test_search_age{"age_group": "Jugendliche"}'
+      - title: "Studenten"
+        payload: '/test_search_age{"age_group": "Studenten"}'
+      - title: "Kinder"
+        payload: '/test_search_age{"age_group": "Kinder"}'
+      - title: "Erwachsene"
+        payload: '/test_search_age{"age_group": "Erwachsene"}'
+      - title: "Geriatrie"
+        payload: '/test_search_age{"age_group": "Geriatrie"}'
+      - title: "Schüler"
+        payload: '/test_search_age{"age_group": "Schüler"}'
+
+  utter_test_search_disorder:
+  - text: "Bitte schreiben Sie eine Störung:"
+
+  utter_test_search_disorder_name:
+  - text: 'testing disorder'
+
+#  utter_ask_test_search_disorder:
+#  - text: "Bitte wählen Sie eine Störung:"
+#    buttons:
+#      - title: "Zuständigkeiten"
+#        payload: /test_search_disorder
+#      - title: "Trauern"
+#        payload: /test_search_disorder
+#      - title: "Sport"
+#        payload: /test_search_disorder
+#      - title: "Depression"
+#        payload: /test_search_disorder
+#      - title: "Bewältigung"
+#        payload: /test_search_disorder
+#      - title: "Selbstwirksamkeit"
+#        payload: /test_search_disorder
+#      - title: "Schlaf"
+#        payload: /test_search_disorder
+#      - title: "Kognition"
+#        payload: /test_search_disorder
+#      - title: "Schmerz"
+#        payload: /test_search_disorder
+#      - title: "Entwicklung"
+#        payload: /test_search_disorder
+#      - title: "Einstellungen"
+#        payload: /test_search_disorder
+#      - title: "Selbstmord"
+#        payload: /test_search_disorder
+#      - title: "Soziale Beziehungen"
+#        payload: /test_search_disorder
+#      - title: "Geriatrie"
+#        payload: /test_search_disorder
+#      - title: "Dissoziation"
+#        payload: /test_search_disorder
+#      - title: "Gefühle"
+#        payload: /test_search_disorder
+#      - title: "Somatoforme Symptome"
+#        payload: /test_search_disorder
+#      - title: "Selbstkontrolle"
+#        payload: /test_search_disorder
+#      - title: "Qualitätssicherung"
+#        payload: /test_search_disorder
+#      - title: "Körperliche Erkrankungen"
+#        payload: /test_search_disorder
+#      - title: "Persönlichkeitsmerkmale"
+#        payload: /test_search_disorder
+#      - title: "Wohlbefinden"
+#        payload: /test_search_disorder
+#      - title: "Verfolgungswahn"
+#        payload: /test_search_disorder
+#      - title: "Schizophrenie"
+#        payload: /test_search_disorder
+#      - title: "Stressreaktionen"
+#        payload: /test_search_disorder
+#      - title: "Reaktionszeit"
+#        payload: /test_search_disorder
+#      - title: "Parkinson"
+#        payload: /test_search_disorder
+#      - title: "Verhalten"
+#        payload: /test_search_disorder
+#      - title: "Essen"
+#        payload: /test_search_disorder
+#      - title: "Aufmerksamkeit"
+#        payload: /test_search_disorder
+#      - title: "Bewertung"
+#        payload: /test_search_disorder
+#      - title: "Motivation"
+#        payload: /test_search_disorder
+#      - title: "Pflegeassessment"
+#        payload: /test_search_disorder
+#      - title: "Sucht"
+#        payload: /test_search_disorder
+#      - title: "Selbstkonzept"
+#        payload: /test_search_disorder
+#      - title: "Demenz"
+#        payload: /test_search_disorder
+#      - title: "Ängste"
+#        payload: /test_search_disorder
+#      - title: "Tägliches Leben"
+#        payload: /test_search_disorder
+#      - title: "Aggressivität"
+#        payload: /test_search_disorder
+#      - title: "Missbrauch"
+#        payload: /test_search_disorder
+#      - title: "Zwanghafte Störung"
+#        payload: /test_search_disorder
+#      - title: "ADHD"
+#        payload: /test_search_disorder
+#      - title: "Sexuelles Verhalten"
+#        payload: /test_search_disorder
+#      - title: "Stimmungslage"
+#        payload: /test_search_disorder
+#      - title: "Trauma"
+#        payload: /test_search_disorder
+#      - title: "Borderline"
+#        payload: /test_search_disorder
+#      - title: "Beruf"
+#        payload: /test_search_disorder
+#      - title: "Willenskraft"
+#        payload: /test_search_disorder
+#      - title: "Intelligenz"
+#        payload: /test_search_disorder
+
+  # Thanks and bye
+  utter_thanks:
+  - text: "Bitteschon! Ich wünsche Ihnen einen schönen Tag."
+  - text: "Gerne! Ich wünsche Ihnen einen schönen Tag."
+
+  utter_goodbye:
+  - text: "Ich wünsche noch einen schönen Tag."
+
+
+actions:
+  - action_default_fallback
+  - action_hyperlink
+  - google_sheet
+  - action_test_catalog
+  - action_reset_slot
+  - action_test_search_age
+  - action_test_search_disorder
+  - action_faq
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

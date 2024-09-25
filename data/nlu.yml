@@ -1,0 +1,504 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - Hallo
+    - hi
+    - morgen
+    - halo
+    - guten morgen
+
+#First option to user
+- intent: clinet_therapist
+  examples: |
+    - I am a client
+    - I am a therapist
+
+#Ask any question
+- intent: ask_question
+
+#Therapist Menu
+- intent: therapist
+
+#Feedback after every questions
+- intent: feedback
+- intent: feedback_therapist
+- intent: feedback_yes
+- intent: feedback_yes_therapist
+- intent: feedback_no
+
+
+
+
+
+#Human handover
+- intent: fallback_human
+
+
+
+#Therapist Menu List
+- intent: konto_abonnements
+- intent: test_battery_menu
+- intent: test_battery_def
+  examples: |
+    - Was ist eine Testbatterie?
+    - Wie definiert man den Begriff "Testbatterie"?
+    - Was umfasst eine Testbatterie?
+    - Welche Funktion hat eine Testbatterie?
+- intent: test_battery_usage
+  examples: |
+    - Kann ich die Testbatterie für bezahlte Tests verwenden?
+- intent: question_credit_use
+  examples: |
+    - Kann ich ein bestehendes Guthaben verwenden, wenn ich mein Konto erweitere?
+
+
+
+
+#Questions from Help Page
+- intent: question/test_assignment_remote_device
+  examples: |
+    - Was passiert nach der Zuweisung eines Tests “Auf einem entfernten Gerät”?
+    - Was passiert, wenn ich einen Test auf ein entferntes Gerät zuweise?
+    - Welche Schritte folgen nach der Testzuweisung auf einem entfernten Gerät?
+    - Wie geht es weiter, wenn ein Test auf ein anderes Gerät zugewiesen wird?
+    - Was sind die nächsten Schritte nach der Zuweisung eines Tests auf ein entferntes Gerät?
+
+- intent: question/def_test_assignment_remote_device
+  examples: | 
+    - Was versteht man unter 'auf einem entfernten Gerät' bei der Testzuweisung?
+    - Kannst du erklären, was 'auf einem entfernten Gerät' bei der Testzuweisung bedeutet?
+    - Was bedeutet der Begriff 'auf einem entfernten Gerät' im Kontext der Testzuweisung?
+    - Was heißt 'auf einem entfernten Gerät' bei der Zuweisung von Tests?
+    - Wie wird 'auf einem entfernten Gerät' bei der Testzuweisung definiert?
+
+- intent: question/add_employee_slots
+  examples: |
+    - Wie kann ich meiner Praxis weitere Mitarbeiterplätze hinzufügen?
+    - Wie füge ich mehr Mitarbeiterplätze zu meiner Praxis hinzu?
+    - Was muss ich tun, um meiner Praxis zusätzliche Mitarbeiterplätze hinzuzufügen?
+    - Wie erhöhe ich die Anzahl der Mitarbeiterplätze in meiner Praxis?
+    - Kann ich zusätzliche Mitarbeiterplätze zu meiner Praxis hinzufügen?
+    - Warum ist in meinem Starter-Abo nur ein Mitarbeiterplatz enthalten?
+    - Muss ich ein Upgrade machen, um mehr Mitarbeiterplätze zu bekommen?
+
+- intent: question/export_test_results
+  examples: |
+    - Wie kann ich die Testergebnisse exportieren?
+    - Welche Schritte sind nötig, um Testergebnisse zu exportieren?
+    - Wie exportiere ich meine Testergebnisse?
+    - Ist es möglich, Testergebnisse zu exportieren?
+    - Kann ich die Testergebnisse exportieren?
+
+- intent: question/starter_access_costs
+  examples: |
+    - Können beim Starter-Abo Kosten entstehen?
+    - Entstehen Kosten, wenn ich das Starter-Abo nutze?
+    - Gibt es Gebühren für das Starter-Abo?
+    - Wird das Starter-Abo etwas kosten?
+    - Kostet das Starter-Abo etwas?
+
+- intent: question/supported_devices
+  examples: |
+    - Auf welchen Endgeräten können Tests durchgeführt werden?
+    - Welche Endgeräte unterstützen die Durchführung von Tests?
+    - Kann ich Tests auf verschiedenen Endgeräten durchführen?
+    - Welche Geräte sind für die Testdurchführung geeignet?
+    - Gibt es bestimmte Endgeräte, auf denen Tests durchgeführt werden können?
+
+- intent: question/find_avv
+  examples: |
+    - Wo finde ich die AVV (Auftragsverarbeitungsvereinbarung)?
+    - Wo kann ich die Auftragsverarbeitungsvereinbarung einsehen?
+    - Wie finde ich die AVV?
+    - Wo ist die AVV zu finden?
+    - Kann ich die AVV irgendwo einsehen?
+
+- intent: question/mark_tests_favorite
+  examples: |
+    - Kann ich häufig verwendete Tests als Favorit markieren?
+    - Wie kann ich Tests als Favorit markieren?
+    - Ist es möglich, Tests zu favorisieren?
+    - Kann ich meine bevorzugten Tests als Favorit kennzeichnen?
+    - Gibt es eine Option, Tests als Favorit zu markieren?
+
+- intent: question/guideline_testing
+  examples: |
+    - Unterstützt die testbox das Testen nach Leitlinie?
+    - Kann ich mit der testbox nach Leitlinie testen?
+    - Wird das Testen nach Leitlinie von der testbox unterstützt?
+    - Ist das Testen nach Leitlinie in der testbox möglich?
+    - Erlaubt die testbox das Testen gemäß Leitlinie?
+
+- intent: question/delete_prepared_tests
+  examples: |
+    - Wie kann ich Tests, die ich zur Vorbereitung gekennzeichnet habe unter der Rubrik "Meine Tests" wieder löschen?
+    - Kann ich vorbereitete Tests in der Rubrik "Meine Tests" löschen?
+    - Wie lösche ich Tests aus der Rubrik "Meine Tests"?
+    - Ist es möglich, vorbereitete Tests aus "Meine Tests" zu entfernen?
+    - Wie entferne ich gekennzeichnete Tests aus "Meine Tests"?
+    - Kann ich einen nicht gestarteten Test zurückerstatten? 
+
+- intent: question/data_security
+  examples: |
+    - Wie werden Datenschutz und Datensicherheit auf der testbox gewährleistet?
+    - Welche Maßnahmen gibt es für Datenschutz und Datensicherheit in der testbox?
+    - Wie sorgt die testbox für Datensicherheit?
+    - Wie wird der Datenschutz in der testbox sichergestellt?
+    - Was tut die testbox für den Schutz meiner Daten?     
+
+- intent: question/test_execution_clients_device
+  examples: |
+    - Wie funktioniert die Testdurchführung auf den Geräten der Klient/-innen?
+    - Wie werden Tests auf den Geräten der Klient/-innen durchgeführt?
+    - Kann ich Tests auf den Geräten meiner Klient/-innen durchführen?
+    - Wie laufen Tests auf Klient/-innen Geräten ab?
+    - Was muss ich tun, um Tests auf den Geräten meiner Klient/-innen durchzuführen?
+
+- intent: question/referral_bonus
+  examples: |
+    - Wie funktioniert der Empfehlungsbonus?
+    - Was muss ich tun, um den Empfehlungsbonus zu erhalten?
+    - Wie kann ich den Empfehlungsbonus nutzen?
+    - Welche Bedingungen gibt es für den Empfehlungsbonus?
+    - Kann ich einen Empfehlungsbonus bekommen?
+
+- intent: question/recharge_practice_balance
+  examples: |
+    - Wie kann ich mein Praxis-Guthaben aufladen?
+    - Was muss ich tun, um mein Praxis-Guthaben aufzuladen?
+    - Gibt es eine Möglichkeit, mein Praxis-Guthaben aufzuladen?
+    - Wie lade ich das Guthaben meiner Praxis auf?
+    - Kann ich das Praxis-Guthaben aufladen?
+
+- intent: question/billing_psychological_tests
+  examples: |
+    - Abrechnung psychologischer Testverfahren
+    - Wie funktioniert die Abrechnung psychologischer Testverfahren?
+    - Was muss ich bei der Abrechnung psychologischer Testverfahren beachten?
+    - Welche Regeln gelten für die Abrechnung psychologischer Testverfahren?
+    - Wie werden psychologische Testverfahren abgerechnet?
+
+- intent: question/prepared_test
+  examples: |
+    - Wo finde ich einen vorbereiteten Test?
+    - Wo gibt es einen vorgefertigten Test?
+    - Wo finde ich einen Test, der bereits vorbereitet ist?
+    - Wo kann ich einen bereits erstellten Test finden?
+    - Wo bekomme ich einen fertig erstellten Test?
+    - Was passiert wenn ich auf „später durchführen“ klicke?
+    - Welche Folgen hat es, wenn ich auf „später durchführen“ klicke?
+    - Was genau passiert nach dem Klicken auf „später durchführen“?
+    - Was bedeutet es, wenn ich „später durchführen“ drücke?
+    - Was passiert, wenn ich die Option „später durchführen“ auswähle?
+
+- intent: question/test_battery_coin
+  examples: |
+    - Wie viele Testcoins werden für eine Batterie verwendet?
+    - Wie viele Testcoins benötigt man, um eine Batterie zu testen?
+    - Wieviele Testcoins braucht man pro Batterie?
+    - Wie viele Testcoins werden pro Batterie verwendet?
+    - Wie viele Testcoins werden für den Test einer Batterie benötigt?
+    - Wie viele Testcoins sind nötig, um eine Batterie zu testen?
+  
+
+- intent: question/create_test_battery
+  examples: |
+    - Wie erstelle ich eine Testbatterie?
+    - Können Sie mir erklären, wie man eine Testbatterie aufbaut?
+    - Wie gehe ich vor, um eine Testbatterie für psychologische Tests zu erstellen?
+    - Welche Schritte sind nötig, um eine Testbatterie zu entwickeln?
+    - Wie gehe ich vor, um eine Testbatterie für psychologische Tests zu erstellen?
+
+- intent: question/test_start
+  examples: |
+    - Wie kann ich einen Test starten?
+    - Wie kann ich einen Test beginnen?
+    - Wie kann ich einen Test durchführen?
+    - Wie starte ich einen Test?
+    - Wie fange ich mit einem Test an?
+    - Was muss ich tun, um einen Test zu starten?
+
+
+- intent: question/test_request
+  examples: |
+    - Wie kann ich einen Test anfragen?
+    - Können Sie mir erklären, wie ich einen Test anfordern kann?
+    - Was muss ich tun, um einen Test anzufordern?
+    - Wie beantrage ich einen Test?
+    - Wie geht man vor, um einen Test anzufragen?
+    - Können Sie mir helfen, einen Test anzufordern?
+    - Was tue ich wenn es einen Test noch nicht gibt?
+    - Was soll ich tun, wenn ein Test noch nicht verfügbar ist?
+    - Wie gehe ich vor, wenn ein Test noch nicht vorhanden ist?
+    - Was mache ich, wenn der Test noch nicht existiert?
+    - Was kann ich tun, wenn der Test noch nicht erstellt wurde?
+    - Welche Schritte sollte ich unternehmen, wenn es den Test noch nicht gibt?
+
+- intent: question/hogrefe
+  examples: |
+    - Habt ihr auf Verfahren von Hogrefe?
+    - Gibt es bei euch Tests von Hogrefe?
+    - Bietet ihr auch Hogrefe-Verfahren an?
+    - Habt ihr psychologische Tests von Hogrefe im Angebot?
+    - Verfügt ihr über Testverfahren von Hogrefe?
+    - Kann man bei euch Hogrefe-Verfahren erhalten?
+
+- intent: question/licensed_procedure_cost
+  examples: |
+    - Kostet ein lizenziertes Verfahren extra oder ist das in meinem Abo beinhaltet?
+    - Ist ein lizenziertes Verfahren im Preis meines Abos enthalten oder fallen zusätzliche Kosten an?
+    - Muss ich für ein lizenziertes Verfahren extra bezahlen, oder ist es in meinem Abo inbegriffen?
+    - Gehört das lizenzierte Verfahren zu meinem Abo, oder kostet das extra?
+    - Sind die lizenzierten Verfahren im Abonnement enthalten, oder gibt es dafür Zusatzkosten?
+    - Fallen für ein lizenziertes Verfahren zusätzliche Gebühren an, oder ist es in meinem Abo enthalten?
+
+#- intent: new_question/test_evaluation_cost
+#  examples: |
+#    - Kostet die Auswertung eines Tests extra?
+#
+#- intent: new_question/map_test_question
+#  examples: |
+#    - Können wir unsere eigenen Fragebögen/Tests auf der testbox abbilden?
+#
+#- intent: new_question/subscription_options
+#  examples: |
+#    - Was gibt es für Abo-Möglichjkeiten auf der testbox?
+#
+#- intent: new_question/professional_subscription
+#  examples: |
+#    - Was kostet das Professionell Abo?
+#- intent: new_question/basic_subscription
+#  examples: |
+#    - Was kostet das Basic-Abo?
+#- intent: new_question/enterprise_subscription
+#  examples: |
+#    - Was ist ein Enterprise Abo?
+#
+#- intent: new_question/language_procedure
+#  examples: |
+#    - Haben sie auch verfahren auf *Sprache*?
+#
+#- intent: new_question/test_digitized
+#  examples: |
+#    - Ich bin ein Autor wie kann mein Verfahren auf der testbox landen?
+#    - Wie kann ich meinen Test digitalisieren lassen?
+#    - Kann ich mein Testverfahren digitalisieren lassen?
+#
+#- intent: new_question/test_publish
+#  examples: |
+#    - Wird mein Verfahren ohne meine Zustimmung veröffentlicht?
+
+- intent: new_question/clients
+  examples: |
+    - Wie kann ich den Test durchführen?
+    - Wie komme ich zu dem Test?
+    - Mein Therapeut hat mir gesagt ich soll hier einen Test durchführen
+
+### Test Catalog ******************************************************************************************************
+- intent: test_catalog_menu
+
+# test catalog by test name
+- intent: test_catalog
+  examples: |
+    - Ich möchte Informationen über einen Test erhalten.
+    - Kannst du mir etwas über einen Test sagen?
+    - Ich brauche Details zu einem Test.
+    - Gib mir bitte Auskunft über einen Test.
+    - Ich würde gerne mehr über einen Test erfahren.
+
+- intent: ask_test_name
+  examples: |
+    - Was ist der [AAVA](test)?
+    - Was ist der [ADL](test)?
+    - Was ist der [ADP-IV](test)?
+    - Was bedeutet [ADP-IV](test)?
+    - Erkläre mir bitte den [ABC-D](test).
+    - Weißt du, was der [ACE-D](test) ist?
+    - Ich brauche Details zum [AFFVAL-L34](test) Test
+    - Kannst du mir mehr über den [AAVA](test) sagen?
+    - Kannst du mir etwas über den [AFFVAL-L34](test) Test sagen?
+    - Kannst du mir erklären, was der [ACE-D](test) ist?
+    - Ich möchte wissen, was der [AIT](test) ist
+    - Ich möchte Informationen über den [ADL](test) Test erhalten
+    - Ich würde gerne mehr über den [ADL](test) Test erfahren.
+    - Erzähl mir etwas über den [AIT](test)
+    
+
+- intent: test_name
+  examples: |
+    - [AAVA](test)
+    - [aava](test)
+    - [aava-ausfuehrung](test)
+    - [ABC-D](test)
+    - [ACE-D](test)
+    - [ADL](test)
+    - [ADP-IV](test)
+    - [AFFVAL-L34](test)
+    - [AIT](test)
+    - [ait](test)
+    - [adl](test)
+
+#- intent: test_search_form
+#  examples: |
+#    - Ich möchte nach Tests für eine Störung suchen
+#    - Ich möchte nach Tests für eine Altersgruppe suchen
+#    - Ich habe einige Störungen, welche Tests wären für mich geeignet?
+
+
+# test catalog by (age_group)
+- intent: test_search_age_menu
+
+- intent: test_search_age
+  examples: |
+    - [Jugendliche](age_group)
+    - [Geriatrie](age_group)
+    - [Senioren](age_group)
+    - [Studenten](age_group)
+    - [Erwachsene](age_group)
+    - [Kinder](age_group)
+    - [Schüler](age_group)
+
+# test catalog by (disorder)
+- intent: test_search_disorder_menu
+
+- intent: test_search_disorder
+  examples: |
+    - Tests für eine Störung
+    - Welche Verfahren gibt es bei [depression](disorder)?
+    - Ich habe eine Störung, ich möchte einige Testvorschläge für diese disorder.
+    - Mein Freund hat ein [schlaf](disorder) Problem, welche Tests gibt es dafür?
+    - Bitte schlag mir einige Tests für [angst](disorder) vor.
+    - Ich habe [depression](disorder), welche Tests kann ich machen?
+    - Ich brauche Vorschläge für [OCD](disorder), kannst du mir helfen?
+    - Meine Mutter hat Schwierigkeiten mit [bipolare](disorder), welche Tests sollte sie machen?
+    - Welche Verfahren gibt es bei [PTSD](disorder)?
+    - Ich glaube, ich habe [panik](disorder), welche Tests können das bestätigen?
+    - Welche Tests werden für [ADHS](disorder) empfohlen?
+
+- intent: test_search_disorder_name
+  examples: |   
+    - [pain](disorder)
+    - [ADHD](disorder)
+    - [adhd](disorder)
+    - [coping](disorder)
+    - [nursingAssessment](disorder)
+    - [development](disorder)
+    - [suicide](disorder)
+    - [attitudes](disorder)
+    - [competencies](disorder)
+    - [paranoia](disorder)
+    - [borderline](disorder)
+    - [physicalIllnesses](disorder)
+    - [ADHD](disorder)
+    - [adhd](disorder)
+    - [schizophrenia](disorder)
+    - [stressReactions](disorder)
+    - [reactionTime](disorder)
+    - [emotions](disorder)
+    - [qualityAssurance](disorder)
+    - [evaluation](disorder)
+    - [adhd](disorder)
+    - [depression](disorder)
+    - [anxiety](disorder)
+    - [selfEfficacy](disorder)
+    - [ADHD](disorder)
+    - [adhd](disorder)
+    - [grief](disorder)
+    - [eating](disorder)
+    - [ADHD](disorder)
+    - [socialRelations](disorder)
+    - [selfConcept](disorder)
+    - [volition](disorder)
+    - [intelligence](disorder)
+    - [motivation](disorder)
+    - [sexualBehavior](disorder)
+    - [trauma](disorder)
+    - [Adhd](disorder)
+    - [adhd](disorder)
+    - [addiction](disorder)
+    - [somatoformSymptoms](disorder)
+    - [aggressiveness](disorder)
+    - [parkinson](disorder)
+    - [dementia](disorder)
+    - [wellBeing](disorder)
+    - [geriatrics](disorder)
+    - [selfControl](disorder)
+    - [sleep](disorder)
+    - [Adhd](disorder)
+    - [personalityTraits](disorder)
+    - [compulsiveDisorder](disorder)
+    - [occupation](disorder)
+    - [abuse](disorder)
+    - [dissociation](disorder)
+    - [behavior](disorder)
+    - [dailyLiving](disorder)
+    - [aDhD](disorder)
+    - [sport](disorder)
+    - [cognition](disorder)
+    - [moodState](disorder)
+    - [attention](disorder)
+
+
+
+# Thanks and bye
+- intent: thanks
+  examples: |
+    - thanks
+    - Danke
+    - Dankeschon
+    - Gerne
+    - Danke ihnen
+- intent: goodbye
+  examples: |
+    - Bye
+    - Tschuss
+    - Auf Wiedersehen
+    - tschüss 
+    - tschüs
+    - tschau
+    - tschauie
+    - tschö
+    - ciao
+
+#Human Handover request from user
+- intent: human_handoff
+  examples: |
+    - Ich möchte einen Menschen sprechen
+    - Kann ich mit einem Makler sprechen?
+    - einen echten Agenten bitte
+    - echter Mensch
+    - Chat mit einem Live-Agenten
+    - Geben Sie mir bitte einen Menschen
+    - Ich möchte mit einem Menschen sprechen
+    - Können Sie mich mit einem Menschen verbinden?
+    - Mit einem Menschen sprechen
+    - Mensch bitte
+    - Ich brauche Hilfe von einem Menschen
+    - Gib mir einen Menschen
+    - Ich möchte einen Vertreter
+    - ich möchte mit einem Menschen sprechen
+    - Ich möchte nicht mit einem Bot sprechen
+    - Ich möchte nicht mit einer Maschine sprechen
+    - Ich möchte mit den Gründern sprechen
+    - Gibt es auch Menschen, die für Ihr Unternehmen arbeiten?
+    - Kann ich mit einem Menschen sprechen?
+    - Kann ich bitte mit einem Menschen sprechen?
+    - Können Sie mich an Ihr Team weiterleiten?
+    - können Sie mich mit einem Menschen verbinden?
+    - Haben Sie einen menschlichen Support?
+
+#Testing Purpose
+- intent: google_sheet
+  examples: |
+    - Was ist ein Hund?
+
+
+
+ 
+
+
+    

@@ -1,0 +1,183 @@
+version: "3.1"
+
+stories:
+
+#greet, client_therapist
+- story: start
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_client_therapist
+
+#therapist, question, feedback_therapist, feedback_yes_therapist
+- story: therapist menu
+  steps:
+  - intent: therapist
+  - action: utter_therapist
+  - intent: question
+  - action: utter_question
+  - action: utter_feedback_therapist
+  - intent: feedback_yes_therapist
+  - action: utter_feedback_yes_therapist
+
+#question, feedback
+- story: asking questions
+  steps:
+  - intent: question
+  - action: utter_question
+  - action: utter_feedback
+
+##new_question, feedback
+#- story: asking questions
+#  steps:
+#  - intent: new_question
+#  - action: utter_new_question
+#  - action: utter_feedback
+
+#question_credit_use, utter_feedback
+- story: asking questions about existing credit
+  steps:
+  - intent: question_credit_use
+  - action: utter_question_credit_use
+  - action: utter_feedback
+
+#feedback_yes
+- story: positive feedback
+  steps:
+  - intent: feedback_yes
+  - action: utter_feedback_yes
+
+#feedback_no
+- story: negative feedback
+  steps:
+  - intent: feedback_no
+  - action: utter_feedback_no
+
+#ask_question
+- story: take user question
+  steps:
+  - intent: ask_question
+  - action: utter_ask_question
+
+#konto_abonnements
+- story: account and subscription
+  steps:
+  - intent: konto_abonnements
+  - action: utter_konto_abonnements
+
+#test_battery_menu
+- story: test battery
+  steps:
+  - intent: test_battery_menu
+  - action: utter_test_battery_menu
+
+#test_battery_def
+- story: asking about test battery definition
+  steps:
+  - intent: test_battery_def
+  - action: utter_test_battery_def
+  - action: utter_feedback
+
+#test_battery_usage
+- story: asking about test battery usage
+  steps:
+  - intent: test_battery_usage
+  - action: utter_test_battery_usage
+  - action: utter_feedback
+
+#Testing Purpose
+- story: answer from google sheets
+  steps:
+  - intent: google_sheet
+  - action: google_sheet
+  - action: utter_feedback
+
+# Test Catalog
+
+- story: test catalog menu
+  steps:
+  - intent: test_catalog_menu
+  - action: utter_test_catalog_menu
+
+# Ask Test Name
+
+- story: details about any particular test
+  steps:
+  - intent: test_catalog
+  - action: utter_test_catalog
+  - intent: test_name
+  - action: action_test_catalog
+  - action: action_reset_slot
+#  - action: utter_feedback
+
+- story: search for test by name
+  steps:
+    - action: utter_test_catalog
+    - intent: test_name
+    - action: action_test_catalog
+    - action: action_reset_slot
+#    - action: utter_feedback
+
+
+- story: details about any particular test
+  steps:
+  - intent: ask_test_name
+  - action: action_test_catalog
+  - action: action_reset_slot
+
+# search test by age
+- story: search test by age menu
+  steps:
+  - intent: test_search_age_menu
+  - action: utter_test_search_age_menu
+
+- story: search test by age
+  steps:
+  - intent: test_search_age
+  - action: action_test_search_age
+#  - action: utter_feedback
+
+# search test by disorder
+- story: interactive_story for test search by disorder
+  steps:
+  - intent: test_search_disorder
+  - action: utter_test_search_disorder
+  - intent: test_search_disorder_name
+  - action: action_test_search_disorder
+  - action: action_reset_slot
+
+- story: search test by disorder name
+  steps:
+  - action: utter_test_search_disorder
+  - intent: test_search_disorder_name
+  - action: action_test_search_disorder
+  - action: action_reset_slot
+
+
+
+
+
+
+
+
+
+#Thanks and goodbye
+- story: thanks
+  steps:
+  - intent: thanks
+  - action: utter_thanks
+  - intent: goodbye
+  - action: utter_goodbye
+
+#Human handover
+- story: fallback test
+  steps:
+  - intent: nlu_fallback
+  - action: action_default_fallback
+  - intent: fallback_human
+  - action: utter_fallback_human
+
+
+
+
+
