@@ -24,12 +24,11 @@ intents:
   - test_catalog
   - test_name
   - ask_test_name
-  - test_search_disorder_menu
-  - test_search_disorder
-  - test_search_disorder_name
   - test_search_age
   - test_search_age_menu
   - test_catalog_menu
+  - test_search_disorder
+  - test_search_disorder_name
 
 
 
@@ -330,9 +329,9 @@ Sie drucken einen QR-Code: Der/Die Patient*in befindet sich in Ihrer Praxis und 
 
   utter_test_search_disorder:
   - text: "Bitte schreiben Sie eine Störung:"
-
-  utter_test_search_disorder_name:
-  - text: 'testing disorder'
+#
+#  utter_test_search_disorder_name:
+#  - text: 'testing disorder'
 
 #  utter_ask_test_search_disorder:
 #  - text: "Bitte wählen Sie eine Störung:"
@@ -453,7 +452,6 @@ actions:
   - action_reset_slot
   - action_test_search_age
   - action_test_search_disorder
-  - action_faq
 
 
 session_config:

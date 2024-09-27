@@ -108,7 +108,6 @@ stories:
   - intent: test_name
   - action: action_test_catalog
   - action: action_reset_slot
-#  - action: utter_feedback
 
 - story: search for test by name
   steps:
@@ -116,7 +115,6 @@ stories:
     - intent: test_name
     - action: action_test_catalog
     - action: action_reset_slot
-#    - action: utter_feedback
 
 
 - story: details about any particular test
@@ -135,7 +133,6 @@ stories:
   steps:
   - intent: test_search_age
   - action: action_test_search_age
-#  - action: utter_feedback
 
 # search test by disorder
 - story: interactive_story for test search by disorder
@@ -144,14 +141,6 @@ stories:
   - action: utter_test_search_disorder
   - intent: test_search_disorder_name
   - action: action_test_search_disorder
-  - action: action_reset_slot
-
-- story: search test by disorder name
-  steps:
-  - action: utter_test_search_disorder
-  - intent: test_search_disorder_name
-  - action: action_test_search_disorder
-  - action: action_reset_slot
 
 
 

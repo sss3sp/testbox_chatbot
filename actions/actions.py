@@ -330,66 +330,66 @@ class ActionTestSearchDisorder(Action):
 # class ActionQuestionsHelp(Action):
 #     def name(self) -> Text:
 #         return "action_faq"
-
-    # def run(self, dispatcher: CollectingDispatcher,
-    #         tracker: Tracker,
-    #         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-    #
-    #     # Load the Excel file or Fetch data from the API
-    #     url = 'https://api.testbox.de/api/help/data'
-    #     response = requests.get(url)
-    #
-    #     if response.status_code == 200:
-    #         data = response.json()
-    #
-    #         # Parse the response JSON
-    #         df = pd.json_normalize(data)
-    #
-    #         # Get the predicted intent from the tracker
-    #         user_intent = tracker.latest_message['intent'].get('name')
-    #
-    #         if user_intent:
-    #             # Perform the search in the API data using the intent as a keyword
-    #             title = self.test_search_intent(df, user_intent)
-    #
-    #             if title is not None and not title.empty:
-    #                 title_data = title['title'].tolist()
-    #                 text_data = title['text'].tolist()
-    #
-    #                 # Construct the response with corresponding test names and disorders
-    #                 response = f"Here is what I know from FAQ section for your question: {user_intent}:\n"
-    #
-    #                 # Loop through paired names and disorders
-    #                 for title_data, text_data in zip(title_data, text_data):
-    #                     response += f"{title_data}:\n, Disorder: {text_data}\n"
-    #             else:
-    #                 response = f"Sorry, I couldn't find any answer for your question"
-    #
-    #             dispatcher.utter_message(text=response)
-    #             # Trigger the feedback response (utter_feedback)
-    #             return [FollowupAction(name="utter_feedback")]
-    #
-    #     else:
-    #         # If the request fails, send a message indicating the issue
-    #         dispatcher.utter_message(text="Sorry, I couldn't retrieve data at this time.")
-    #         return []
-    #
-    #     return []
-    #
-    # @staticmethod
-    # def test_search_intent(df: pd.DataFrame, intent: str) -> pd.DataFrame:
-    #     # Convert the intent string to lowercase for consistent case-insensitive comparison
-    #     intent = intent.lower()
-    #
-    #     # Search for the test name in the 'intent' column or any column that matches the predicted intent
-    #     # Assuming the API data has a column 'intent_examples' that contains relevant information
-    #     intent_match = df['intent_examples'].apply(
-    #         lambda examples: any(intent in example.lower() for example in examples))
-    #
-    #     # Filter the dataframe for matches
-    #     matches = df[intent_match]
-    #
-    #     return matches
+#
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#
+#         # Load the Excel file or Fetch data from the API
+#         url = 'https://api.testbox.de/api/help/data'
+#         response = requests.get(url)
+#
+#         if response.status_code == 200:
+#             data = response.json()
+#
+#             # Parse the response JSON
+#             df = pd.json_normalize(data)
+#
+#             # Get the predicted intent from the tracker
+#             user_intent = tracker.latest_message['intent'].get('name')
+#
+#             if user_intent:
+#                 # Perform the search in the API data using the intent as a keyword
+#                 title = self.test_search_intent(df, user_intent)
+#
+#                 if title is not None and not title.empty:
+#                     title_data = title['title'].tolist()
+#                     text_data = title['text'].tolist()
+#
+#                     # Construct the response with corresponding test names and disorders
+#                     response = f"Here is what I know from FAQ section for your question: {user_intent}:\n"
+#
+#                     # Loop through paired names and disorders
+#                     for title_data, text_data in zip(title_data, text_data):
+#                         response += f"{title_data}:\n, Disorder: {text_data}\n"
+#                 else:
+#                     response = f"Sorry, I couldn't find any answer for your question"
+#
+#                 dispatcher.utter_message(text=response)
+#                 # Trigger the feedback response (utter_feedback)
+#                 return [FollowupAction(name="action_reset_slot")]
+#
+#         else:
+#             # If the request fails, send a message indicating the issue
+#             dispatcher.utter_message(text="Sorry, I couldn't retrieve data at this time.")
+#             return []
+#
+#         return []
+#
+#     @staticmethod
+#     def test_search_intent(df: pd.DataFrame, intent: str) -> pd.DataFrame:
+#         # Convert the intent string to lowercase for consistent case-insensitive comparison
+#         intent = intent.lower()
+#
+#         # Search for the test name in the 'intent' column or any column that matches the predicted intent
+#         # Assuming the API data has a column 'intent_examples' that contains relevant information
+#         intent_match = df['intent_examples'].apply(
+#             lambda examples: any(intent in example.lower() for example in examples))
+#
+#         # Filter the dataframe for matches
+#         matches = df[intent_match]
+#
+#         return matches
 
 
 # class TestSearchForm(FormValidationAction):

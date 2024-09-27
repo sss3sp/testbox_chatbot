@@ -199,7 +199,7 @@ nlu:
   examples: |
     - Wie viele Testcoins werden für eine Batterie verwendet?
     - Wie viele Testcoins benötigt man, um eine Batterie zu testen?
-    - Wieviele Testcoins braucht man pro Batterie?
+    - Wie viele Testcoins braucht man pro Batterie?
     - Wie viele Testcoins werden pro Batterie verwendet?
     - Wie viele Testcoins werden für den Test einer Batterie benötigt?
     - Wie viele Testcoins sind nötig, um eine Batterie zu testen?
@@ -363,8 +363,7 @@ nlu:
     - [Schüler](age_group)
 
 # test catalog by (disorder)
-- intent: test_search_disorder_menu
-
+#
 - intent: test_search_disorder
   examples: |
     - Tests für eine Störung
@@ -378,9 +377,9 @@ nlu:
     - Welche Verfahren gibt es bei [PTSD](disorder)?
     - Ich glaube, ich habe [panik](disorder), welche Tests können das bestätigen?
     - Welche Tests werden für [ADHS](disorder) empfohlen?
-
+#
 - intent: test_search_disorder_name
-  examples: |   
+  examples: |
     - [pain](disorder)
     - [ADHD](disorder)
     - [adhd](disorder)
@@ -392,6 +391,7 @@ nlu:
     - [competencies](disorder)
     - [paranoia](disorder)
     - [borderline](disorder)
+    - [nursing Assessment](disorder)
     - [physicalIllnesses](disorder)
     - [ADHD](disorder)
     - [adhd](disorder)
@@ -401,14 +401,18 @@ nlu:
     - [emotions](disorder)
     - [qualityAssurance](disorder)
     - [evaluation](disorder)
+    - [reaction Time](disorder)
     - [adhd](disorder)
     - [depression](disorder)
     - [anxiety](disorder)
     - [selfEfficacy](disorder)
+    - [sexual Behavior](disorder)
     - [ADHD](disorder)
     - [adhd](disorder)
     - [grief](disorder)
     - [eating](disorder)
+    - [physical Illnesses](disorder)
+    - [stress Reactions](disorder)
     - [ADHD](disorder)
     - [socialRelations](disorder)
     - [selfConcept](disorder)
@@ -417,10 +421,12 @@ nlu:
     - [motivation](disorder)
     - [sexualBehavior](disorder)
     - [trauma](disorder)
+    - [social Relations](disorder)
     - [Adhd](disorder)
     - [adhd](disorder)
     - [addiction](disorder)
     - [somatoformSymptoms](disorder)
+    - [personality Traits](disorder)
     - [aggressiveness](disorder)
     - [parkinson](disorder)
     - [dementia](disorder)
@@ -428,12 +434,17 @@ nlu:
     - [geriatrics](disorder)
     - [selfControl](disorder)
     - [sleep](disorder)
+    - [well Being](disorder)
     - [Adhd](disorder)
     - [personalityTraits](disorder)
+    - [daily Living](disorder)
     - [compulsiveDisorder](disorder)
     - [occupation](disorder)
     - [abuse](disorder)
+    - [self Concept](disorder)
     - [dissociation](disorder)
+    - [mood State](disorder)
+    - [self Control](disorder)
     - [behavior](disorder)
     - [dailyLiving](disorder)
     - [aDhD](disorder)
@@ -495,6 +506,7 @@ nlu:
 - intent: google_sheet
   examples: |
     - Was ist ein Hund?
+    - Was ist ein man?
 
 
 
