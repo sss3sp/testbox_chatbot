@@ -452,7 +452,7 @@ actions:
   - action_reset_slot
   - action_test_search_age
   - action_test_search_disorder
-
+  - action_faq
 
 session_config:
   session_expiration_time: 60

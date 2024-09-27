@@ -15,7 +15,7 @@ stories:
   - intent: therapist
   - action: utter_therapist
   - intent: question
-  - action: utter_question
+  - action: action_faq
   - action: utter_feedback_therapist
   - intent: feedback_yes_therapist
   - action: utter_feedback_yes_therapist
@@ -24,7 +24,7 @@ stories:
 - story: asking questions
   steps:
   - intent: question
-  - action: utter_question
+  - action: action_faq
   - action: utter_feedback
 
 ##new_question, feedback
