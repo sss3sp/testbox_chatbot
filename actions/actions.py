@@ -14,7 +14,7 @@ from rasa_sdk.types import DomainDict
 import pandas as pd
 import io
 import random
-# from ruamel.yaml import YAML
+import yaml
 import os
 import re
 
@@ -335,61 +335,89 @@ class ActionQuestionsHelp(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        # Load the Excel file or Fetch data from the API
-        url = 'https://api.testbox.de/api/help/data'
-        response = requests.get(url)
+        # Step 1: Get the full sub-intent using response selector
+        full_intent_data = tracker.latest_message.get("response_selector", {}).get('default',{}).get('response',{})
+        full_intent = full_intent_data.get("intent_response_key",None)  # Extract sub-intent
 
-        if response.status_code == 200:
-            data = response.json()
-
-            # Parse the response JSON
-            df = pd.json_normalize(data)
-
-            # Get the predicted intent from the tracker
-            user_intent = tracker.latest_message['intent'].get('name')
-
-            if user_intent:
-                # Perform the search in the API data using the intent as a keyword
-                title = self.test_search_intent(df, user_intent)
-
-                if title is not None and not title.empty:
-                    title_data = title['title'].tolist()
-                    text_data = title['text'].tolist()
-
-                    # Construct the response with corresponding test names and disorders
-                    response = f"Here is what I know from FAQ section for your question: {user_intent}:\n"
-
-                    # Loop through paired names and disorders
-                    for title_data, text_data in zip(title_data, text_data):
-                        response += f"{title_data}:\n, Disorder: {text_data}\n"
-                else:
-                    response = f"Sorry, I couldn't find any answer for your question"
-
-                dispatcher.utter_message(text=response)
-                # Trigger the feedback response (utter_feedback)
-                return [FollowupAction(name="action_reset_slot")]
-
+        print(f"Full intent: {full_intent}")  # Debugging print
+        if full_intent:
+            # Extract topic (sub-intent) after 'question/' (assuming intent format is 'question/topic')
+            topic = full_intent.split("/")[1] if "/" in full_intent else None
         else:
-            # If the request fails, send a message indicating the issue
-            dispatcher.utter_message(text="Sorry, I couldn't retrieve data at this time.")
-            return []
+            topic = None
+
+        if topic:
+            # Step 2: Load intent examples from nlu.yml
+            intent_examples = self.load_intent_examples_from_nlu(topic)
+
+            # Step 3: Fetch data from the API
+            url = 'https://api.testbox.de/api/help/data'
+            response = requests.get(url)
+
+            if response.status_code == 200:
+                data = response.json()
+                # Access the 'articles' list inside the 'data' dictionary
+                articles_data = data.get('articles', [])
+
+                # Step 4: Normalize the API data using pandas
+                df = pd.json_normalize(articles_data)
+
+                # Step 5: Match intent examples with the "title" field in API data
+                matched_article = self.match_intent_example(intent_examples, df)
+
+                if matched_article is not None:
+                    # Send the response from the matched API data
+                    response_text = matched_article.get('text')
+                    dispatcher.utter_message(text=response_text)
+                else:
+                    dispatcher.utter_message(text="Sorry, I couldn't find a response matching your query.")
+            else:
+                dispatcher.utter_message(text="Sorry, I couldn't retrieve data from the API at this time.")
+        else:
+            dispatcher.utter_message(text="Sorry, I couldn't identify your query intent.")
 
         return []
 
+    def load_intent_examples_from_nlu(self, topic: str) -> List[str]:
+        """
+        Load examples for the given sub-intent (topic) from the nlu.yml file.
+        """
+        # Get the current working directory
+        cwd = os.getcwd()
+
+        # Construct the full path to the 'nlu.yml' file
+        nlu_file_path = os.path.join(cwd, 'data\\nlu.yml')
+        with open(nlu_file_path, 'r', encoding='utf-8') as file:
+            nlu_data = yaml.safe_load(file)
+
+        # Search for the intent and its examples
+        intent_examples = []
+        for intent in nlu_data['nlu']:
+            if intent['intent'] == f"question/{topic}":  # Assuming intents are in this format
+                examples = intent.get('examples', "").strip().split("\n")
+                intent_examples = [ex.strip('- ') for ex in examples]  # Clean up examples
+                break
+        print(f"Intent examples: {intent_examples}")  # Debugging print
+        return intent_examples
+
     @staticmethod
-    def test_search_intent(df: pd.DataFrame, intent: str) -> pd.DataFrame:
-        # Convert the intent string to lowercase for consistent case-insensitive comparison
-        intent = intent.lower()
+    def match_intent_example(intent_examples: List[str], df: pd.DataFrame) -> Dict[Text, Any]:
+        """
+        Match the intent examples with the 'title' field in the articles DataFrame.
+        If a match is found, return the matched row as a dictionary; otherwise, return None.
+        """
+        # Normalize both intent examples and title for case-insensitive matching
+        intent_examples = [example.lower() for example in intent_examples]
 
-        # Search for the test name in the 'intent' column or any column that matches the predicted intent
-        # Assuming the API data has a column 'intent_examples' that contains relevant information
-        intent_match = df['title'].apply(
-            lambda examples: any(intent in example.lower() for example in examples))
+        # Iterate over the DataFrame to find matching titles
+        for _, row in df.iterrows():
+            title = row['title'].lower()
 
-        # Filter the dataframe for matches
-        matches = df[intent_match]
+            # Check if any intent example matches the title
+            if any(example in title for example in intent_examples):
+                return row.to_dict()  # Return the matched row as a dictionary
 
-        return matches
+        return None  # Return None if no match is found
 
 
 # class TestSearchForm(FormValidationAction):
