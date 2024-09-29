@@ -5,18 +5,18 @@
 # https://rasa.com/docs/rasa/custom-actions
 
 import requests
-import json
+import pandas as pd
+import io
+import yaml
+import os
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import UserUtteranceReverted, SlotSet, AllSlotsReset, FollowupAction
-from rasa_sdk.types import DomainDict
-import pandas as pd
-import io
-import random
-import yaml
-import os
-import re
+# import json
+# from rasa_sdk.types import DomainDict
+# import random
+# import re
 
 class ActionDefaultFallback(Action):
 
@@ -31,82 +31,82 @@ class ActionDefaultFallback(Action):
 
         return [UserUtteranceReverted()]
 
-class ActionHyperlink(Action):
+# class ActionHyperlink(Action):
+#
+#     def name(self) -> Text:
+#         return "action_hyperlink"
+#
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#         link1 = "https://testbox.de/browsers"
+#         dispatcher.utter_template("utter_question/supported_devices", tracker, link=link1)
+#
+#         return []
 
-    def name(self) -> Text:
-        return "action_hyperlink"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        link1 = "https://testbox.de/browsers"
-        dispatcher.utter_template("utter_question/supported_devices", tracker, link=link1)
-
-        return []
-
-
-class GoogleSheet(Action):
-    """Rasa action to parse user text and pull a corresponding answer
-    from Google Sheets based on the intent and entities.
-    If there is no answer in the Google Sheet, it will use the ChatGPT API."""
-
-    def name(self) -> Text:
-        return "google_sheet"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        # Set the environment variable for testing purposes
-        os.environ["SHEET_URL"] = "1aHXOFLyUd6J3elNlCbT1xgKaHN9LAJwCkHjuFKKOzqY"
-
-        # Get the latest user text, intent, and entities
-        user_text = tracker.latest_message.get('text')
-        intent = tracker.latest_message.get('intent').get('name')
-        entities = tracker.latest_message.get('entities')
-
-        # Fetch the answer from Google Sheets
-        answer = self.get_answers_from_sheets(intent, entities, user_text)
-
-        # Dispatch the response
-        dispatcher.utter_message(text=answer)
-
-        return []
-
-    def get_answers_from_sheets(self, intent, entities, user_text):
-        try:
-            # Connect to Google Sheets
-            sheet_url = os.getenv("SHEET_URL")  # Ensure this environment variable is set correctly
-            if not sheet_url:
-                return "Sorry, I couldn't find the Google Sheet URL."
-
-            GOOGLE_SHEET_URL = f"https://docs.google.com/spreadsheets/d/{sheet_url}/export?format=csv&gid=0"
-            response = requests.get(GOOGLE_SHEET_URL)
-            response.raise_for_status()  # Raise an error for bad status codes
-
-            # Read the contents of the URL as a CSV file and store it in a dataframe
-            proxy_df = pd.read_csv(io.StringIO(response.content.decode('utf-8')))
-
-            if entities:
-                entity_value = entities[0].get('value')
-                filtered_df = proxy_df[(proxy_df['Intent'] == intent) & (proxy_df['Entity'] == entity_value)]
-
-                if filtered_df.empty:
-                    answer = self.get_answer_from_chatgpt(user_text)
-                else:
-                    answers = filtered_df['Answer'].tolist()
-                    answer = random.choice(answers)
-            else:
-                answer = self.get_answer_from_chatgpt(user_text)
-
-            return answer
-        except Exception as e:
-            return f"An error occurred: {str(e)}"
-
-    def get_answer_from_chatgpt(self, user_text):
-        # Placeholder for the ChatGPT API call
-        # This function should call the OpenAI API and return a response based on the user_text
-        return "This is a fallback response from ChatGPT API."
+# class GoogleSheet(Action):
+#     """Rasa action to parse user text and pull a corresponding answer
+#     from Google Sheets based on the intent and entities.
+#     If there is no answer in the Google Sheet, it will use the ChatGPT API."""
+#
+#     def name(self) -> Text:
+#         return "google_sheet"
+#
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#
+#         # Set the environment variable for testing purposes
+#         os.environ["SHEET_URL"] = "1aHXOFLyUd6J3elNlCbT1xgKaHN9LAJwCkHjuFKKOzqY"
+#
+#         # Get the latest user text, intent, and entities
+#         user_text = tracker.latest_message.get('text')
+#         intent = tracker.latest_message.get('intent').get('name')
+#         entities = tracker.latest_message.get('entities')
+#
+#         # Fetch the answer from Google Sheets
+#         answer = self.get_answers_from_sheets(intent, entities, user_text)
+#
+#         # Dispatch the response
+#         dispatcher.utter_message(text=answer)
+#
+#         return []
+#
+#     def get_answers_from_sheets(self, intent, entities, user_text):
+#         try:
+#             # Connect to Google Sheets
+#             sheet_url = os.getenv("SHEET_URL")  # Ensure this environment variable is set correctly
+#             if not sheet_url:
+#                 return "Sorry, I couldn't find the Google Sheet URL."
+#
+#             GOOGLE_SHEET_URL = f"https://docs.google.com/spreadsheets/d/{sheet_url}/export?format=csv&gid=0"
+#             response = requests.get(GOOGLE_SHEET_URL)
+#             response.raise_for_status()  # Raise an error for bad status codes
+#
+#             # Read the contents of the URL as a CSV file and store it in a dataframe
+#             proxy_df = pd.read_csv(io.StringIO(response.content.decode('utf-8')))
+#
+#             if entities:
+#                 entity_value = entities[0].get('value')
+#                 filtered_df = proxy_df[(proxy_df['Intent'] == intent) & (proxy_df['Entity'] == entity_value)]
+#
+#                 if filtered_df.empty:
+#                     answer = self.get_answer_from_chatgpt(user_text)
+#                 else:
+#                     answers = filtered_df['Answer'].tolist()
+#                     answer = random.choice(answers)
+#             else:
+#                 answer = self.get_answer_from_chatgpt(user_text)
+#
+#             return answer
+#         except Exception as e:
+#             return f"An error occurred: {str(e)}"
+#
+#     def get_answer_from_chatgpt(self, user_text):
+#         # Placeholder for the ChatGPT API call
+#         # This function should call the OpenAI API and return a response based on the user_text
+#         return "This is a fallback response from ChatGPT API."
 
 
 class ActionTestCatalog(Action):
@@ -141,11 +141,11 @@ class ActionTestCatalog(Action):
                           f"Full Name: {full_name}\n" \
                           f"Disorder: {disorder}"
             else:
-                response = f"Tut mir leid, ich weiß nichts über {test}"
+                response = f"Tut mir leid, ich weiß nichts über {test}.Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de"
 
             dispatcher.utter_message(text=response)
             # Trigger the feedback response (utter_feedback)
-            return [FollowupAction(name="utter_feedback")]
+            return [FollowupAction(name="action_reset_slot")]
 
         else:
             # If the test name could not be extracted, trigger the utter_test_name response
@@ -212,15 +212,15 @@ class ActionTestSearchAge(Action):
                     for name, disorder in zip(name, disorder):
                         response += f"Test Name: {name}, Disorder: {disorder}\n"
                 else:
-                    response = f"Tut mir leid, ich finde keine test fur {age_group}"
+                    response = f"Tut mir leid, ich finde keine test fur {age_group}. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de"
 
                 dispatcher.utter_message(text=response)
                 # Trigger the feedback response (utter_feedback)
-                return [FollowupAction(name="utter_feedback")]
+                return [FollowupAction(name="action_reset_slot")]
 
         else:
             # If the request fails, send a message indicating the issue
-            dispatcher.utter_message(text="Sorry, I couldn't retrieve data at this time.")
+            dispatcher.utter_message(text="Leider konnte ich Ihre Zielgruppe nicht identifizieren. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
             return []
 
         return []
@@ -304,11 +304,15 @@ class ActionTestSearchDisorder(Action):
                         variants = "Keine"
                     response += f"Test Name: {name}, variants: {variants}\n"
             else:
-                response = f"Tut mir leid, ich finde keine test fur {disorder}"
+                response = f"Tut mir leid, ich finde keine test fur {disorder}. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de "
 
             dispatcher.utter_message(text=response)
             # Trigger the feedback response (utter_feedback)
-            return [FollowupAction(name="utter_feedback")]
+            return [FollowupAction(name="action_reset_slot")]
+
+        else:
+            # If the request fails, send a message indicating the issue
+            dispatcher.utter_message(text="Tut mir leid, ich konnte Ihre Störung nicht identifizieren. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
 
         return []
 
@@ -369,12 +373,15 @@ class ActionQuestionsHelp(Action):
                     # Send the response from the matched API data
                     response_text = matched_article.get('text')
                     dispatcher.utter_message(text=response_text)
+                elif matched_article is None:
+                    # If no matched article is found, use the fallback utterance from the domain file
+                    dispatcher.utter_message(response="utter_question")
                 else:
-                    dispatcher.utter_message(text="Sorry, I couldn't find a response matching your query.")
+                    dispatcher.utter_message(text="Leider konnte ich keine Antwort auf Ihre Frage finden. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
             else:
-                dispatcher.utter_message(text="Sorry, I couldn't retrieve data from the API at this time.")
+                dispatcher.utter_message(text="Leider konnte ich zu diesem Zeitpunkt keine Daten von der API abrufen. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
         else:
-            dispatcher.utter_message(text="Sorry, I couldn't identify your query intent.")
+            dispatcher.utter_message(text="Leider konnte ich die Intent Ihrer Anfrage nicht erkennen. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
 
         return []
 
