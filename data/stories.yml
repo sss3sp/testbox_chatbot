@@ -86,11 +86,11 @@ stories:
   - action: utter_feedback
 
 #Testing Purpose
-- story: answer from google sheets
-  steps:
-  - intent: google_sheet
-  - action: google_sheet
-  - action: utter_feedback
+#- story: answer from google sheets
+#  steps:
+#  - intent: google_sheet
+#  - action: google_sheet
+#  - action: utter_feedback
 
 # Test Catalog
 
@@ -107,21 +107,21 @@ stories:
   - action: utter_test_catalog
   - intent: test_name
   - action: action_test_catalog
-  - action: action_reset_slot
+  - action: utter_feedback
 
 - story: search for test by name
   steps:
     - action: utter_test_catalog
     - intent: test_name
     - action: action_test_catalog
-    - action: action_reset_slot
+    - action: utter_feedback
 
 
 - story: details about any particular test
   steps:
   - intent: ask_test_name
   - action: action_test_catalog
-  - action: action_reset_slot
+  - action: utter_feedback
 
 # search test by age
 - story: search test by age menu
@@ -141,6 +141,7 @@ stories:
   - action: utter_test_search_disorder
   - intent: test_search_disorder_name
   - action: action_test_search_disorder
+
 
 
 

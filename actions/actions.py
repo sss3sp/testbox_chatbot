@@ -145,13 +145,13 @@ class ActionTestCatalog(Action):
 
             dispatcher.utter_message(text=response)
             # Trigger the feedback response (utter_feedback)
-            return [FollowupAction(name="action_reset_slot")]
+            return []
 
         else:
             # If the test name could not be extracted, trigger the utter_test_name response
             dispatcher.utter_message(response="utter_test_catalog")
 
-        return []
+        return [FollowupAction(name="action_reset_slot")]
 
 
     @staticmethod
@@ -216,14 +216,15 @@ class ActionTestSearchAge(Action):
 
                 dispatcher.utter_message(text=response)
                 # Trigger the feedback response (utter_feedback)
-                return [FollowupAction(name="action_reset_slot")]
+                return [FollowupAction(name="utter_feedback")]
+
 
         else:
             # If the request fails, send a message indicating the issue
             dispatcher.utter_message(text="Leider konnte ich Ihre Zielgruppe nicht identifizieren. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
-            return []
+            return [FollowupAction(name="utter_feedback")]
 
-        return []
+        return [SlotSet("age_group", None)]
 
 
     @staticmethod
@@ -307,14 +308,15 @@ class ActionTestSearchDisorder(Action):
                 response = f"Tut mir leid, ich finde keine test fur {disorder}. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de "
 
             dispatcher.utter_message(text=response)
-            # Trigger the feedback response (utter_feedback)
-            return [FollowupAction(name="action_reset_slot")]
+
+            return [FollowupAction(name="utter_feedback")]
 
         else:
             # If the request fails, send a message indicating the issue
             dispatcher.utter_message(text="Tut mir leid, ich konnte Ihre Störung nicht identifizieren. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
+            return [FollowupAction(name="utter_feedback")]
 
-        return []
+        return [SlotSet('disorder', None)]
 
 
     @staticmethod
@@ -331,6 +333,7 @@ class ActionTestSearchDisorder(Action):
 
         return matches
 
+###FAQ###****************************************************************************************************************
 class ActionQuestionsHelp(Action):
     def name(self) -> Text:
         return "action_faq"
@@ -450,4 +453,4 @@ class ResetSlot(Action):
         return "action_reset_slot"
 
     def run(self, dispatcher, tracker, domain):
-        return [SlotSet("test", None)]
+        return [SlotSet("test", None), SlotSet("age_group", None), SlotSet("disorder", None)]

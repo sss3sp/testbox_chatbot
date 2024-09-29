@@ -459,6 +459,9 @@ nlu:
 - intent: thanks
   examples: |
     - thanks
+    - ok
+    - okay
+    - alright
     - Danke
     - Dankeschon
     - Gerne
