@@ -376,9 +376,12 @@ class ActionQuestionsHelp(Action):
                     # Send the response from the matched API data
                     response_text = matched_article.get('text')
                     dispatcher.utter_message(text=response_text)
+
                 elif matched_article is None:
                     # If no matched article is found, use the fallback utterance from the domain file
-                    dispatcher.utter_message(response="utter_question")
+                    print(f"No match found, Answer from utter_question/{topic}") # Debug print
+                    dispatcher.utter_message(response=f"utter_question/{topic}")
+
                 else:
                     dispatcher.utter_message(text="Leider konnte ich keine Antwort auf Ihre Frage finden. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
             else:
