@@ -309,7 +309,7 @@ Sie drucken einen QR-Code: Der/Die Patient*in befindet sich in Ihrer Praxis und 
   - text: "Bitte Schriben die Test name"
 
 # test_search_form
-  utter_test_search_age_menu:
+  utter_test_age_menu:
   - text: "Bitte wählen Sie die Zielgruppe:"
     buttons:
       - title: "Senioren"
@@ -326,7 +326,6 @@ Sie drucken einen QR-Code: Der/Die Patient*in befindet sich in Ihrer Praxis und 
         payload: '/test_search_age{"age_group": "geriatrics"}'
       - title: "Schüler"
         payload: '/test_search_age{"age_group": "pupils"}'
-
 
   utter_test_search_disorder:
   - text: "Bitte schreiben Sie eine Störung:"

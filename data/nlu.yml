@@ -363,7 +363,6 @@ nlu:
     - [pupils](age_group)
 
 # test catalog by (disorder)
-#
 - intent: test_search_disorder
   examples: |
     - Tests für eine Störung

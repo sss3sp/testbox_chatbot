@@ -117,58 +117,155 @@ class ActionTestCatalog(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        # Load the Excel file
-        file_path = 'F:\\MSc TUK WS19-20\\Thesis\\Chatbot\\test_catalog_sample.xlsx'
-        df = pd.read_excel(file_path)
+#### Data Source #################################################################
+##################################################################################
 
-        # Extract the user message
-        # Use with slot
-        test_slot = next(tracker.get_latest_entity_values("test"), None)
-        test = tracker.get_slot("test") or test_slot
+        # Option 1: Fetch data from the API
+        url = 'https://api.testbox.de/api/test/list'
+        response = requests.get(url)
 
-        # user_intent = tracker.latest_message['intent'].get('name')
+        if response.status_code == 200:
+            data = response.json()
 
-        if test is not None:
-            test_name = self.test_catalog(df, test)
+            # Parse the response JSON
+            df = pd.json_normalize(data)
 
-            print(test_name)
+            # Extract the user message
+            # Use with slot
+            test_slot = next(tracker.get_latest_entity_values("test"), None)
+            test = tracker.get_slot("test") or test_slot
 
-            if test_name is not None and not test_name.empty:
-                full_name = test_name.iloc[0]['full_name']  # Extract first row's 'full_name' value
-                disorder = test_name.iloc[0]['disorder']  # Extract first row's 'disorder' value
+            if test is not None:
+                test_name = self.test_catalog(df, test)
 
-                response = f"Here is what I know about {test}: \n" \
-                          f"Full Name: {full_name}\n" \
-                          f"Disorder: {disorder}"
+                print(test_name)
+
+                if test_name is not None and not test_name.empty:
+                    name = test_name['name'].tolist()
+                    disorder = test_name['disorder'].tolist()  # Extract first row's 'disorder' value
+                    slug = test_name['slug'].tolist()
+
+                    # Ignore the [] braces
+                    if isinstance(name, list):
+                        name = ", ".join(name)
+                        # Handle 'disorder' as a nested list
+                    if isinstance(disorder, list) and isinstance(disorder[0], list):
+                        disorder = [item for sublist in disorder for item in sublist]  # Flatten the nested list
+                    if isinstance(disorder, list):
+                        disorder = ", ".join(disorder)
+
+                    response = f"Ich weiß Folgendes über {test}- \n" \
+                               f"Name: <b>{name}</b>\n" \
+                               f"Störung: {disorder}\n" \
+                               f"Details: https://testbox.de/test/{slug}/details \n"
+                else:
+                    # when no matching age group found from api
+                    response = f"Tut mir leid, ich weiß nichts über {test}.Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de"
+
+                dispatcher.utter_message(text=response)
+                # Trigger the feedback response (utter_feedback)
+                return []
+
             else:
-                response = f"Tut mir leid, ich weiß nichts über {test}.Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de"
-
-            dispatcher.utter_message(text=response)
-            # Trigger the feedback response (utter_feedback)
-            return []
+                # If the test name could not be extracted, trigger the utter_test_name response
+                dispatcher.utter_message(response="utter_test_catalog")
 
         else:
-            # If the test name could not be extracted, trigger the utter_test_name response
-            dispatcher.utter_message(response="utter_test_catalog")
+            # If the request fails, send a message indicating the issue
+            dispatcher.utter_message(text="Leider konnte ich Ihre Zielgruppe nicht identifizieren. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
+            return [FollowupAction(name="utter_feedback")]
 
         return [FollowupAction(name="action_reset_slot")]
 
-
     @staticmethod
-    def test_catalog(df: pd.DataFrame, test: str) -> Dict[Text, Any]:
+    def test_catalog(df: pd.DataFrame, test: str) -> pd.DataFrame:
         # Convert the test string to lowercase for consistent case-insensitive comparison
         test = test.lower()
         print(test)
 
         # Search for the test name in both 'name' and 'variants' columns (case-insensitive)
         # Search in 'name' and 'time' columns, case insensitive
-        name_match = df['name'].fillna('').str.lower().str.contains(test)
-        varinat_match = df['variants'].fillna('').str.lower().str.contains(test)
+        name_match = df['name'].apply(lambda names: any(test in i.lower() for i in names))
+
+        varinat_match = df['variants'].apply(lambda test_variants: any(test in i.lower() for i in test_variants))
 
         # Combine the matches
         matches = df[name_match | varinat_match]
 
         return matches
+
+###########################################################################################################
+#Option 2: Google Sheet, please uncomment the following when needed and comment out the above codes inside # tags
+# Load the google sheet
+
+    #     try:
+    #         # Construct the URL for CSV export
+    #         GOOGLE_SHEET_URL = f"https://docs.google.com/spreadsheets/d/1DV9s6gLmgqPT0DioWgUpIVuuZeZQD_AXCpXc-G9TSLk/export?format=csv&gid=0"
+    #
+    #         # Fetch the CSV file from the Google Sheets URL
+    #         response = requests.get(GOOGLE_SHEET_URL)
+    #         response.raise_for_status()  # Raise an error for bad status codes
+    #
+    #         # Read the contents of the CSV file and store it in a pandas dataframe
+    #         df = pd.read_csv(io.StringIO(response.content.decode('utf-8')))
+    #
+    #     except Exception as e:
+    #         print(f"Error loading Google Sheet: {str(e)}")
+    #
+    #     # Extract the user message
+    #     # Use with slot
+    #     test_slot = next(tracker.get_latest_entity_values("test"), None)
+    #     test = tracker.get_slot("test") or test_slot
+    #
+    #     if test is not None:
+    #         test_name = self.test_catalog(df, test)
+    #
+    #         print(test_name)
+    #
+    #         if test_name is not None and not test_name.empty:
+    #             name = test_name['name'].tolist()
+    #             disorder = test_name['disorder'].tolist()  # Extract first row's 'disorder' value
+    #             #slug = test_name['slug'].tolist()
+    #
+    #             # ignoring [ ] braces
+    #             if isinstance(disorder, list):
+    #                 disorder = ", ".join(disorder)
+    #             if isinstance(name, list):
+    #                 name = ", ".join(name)
+    #
+    #             response = f"Ich weiß Folgendes über {test}- \n" \
+    #                        f"Name: <b>{name}</b>\n" \
+    #                        f"Störung: {disorder}\n" \
+    #                        #f"Details: https://testbox.de/test/{slug}/details \n"
+    #
+    #         else:
+    #             response = f"Tut mir leid, ich weiß nichts über {test}.Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de"
+    #
+    #         dispatcher.utter_message(text=response)
+    #         # Trigger the feedback response (utter_feedback)
+    #         return []
+    #
+    #     else:
+    #         # If the test name could not be extracted, trigger the utter_test_name response
+    #         dispatcher.utter_message(response="utter_test_catalog")
+    #
+    #     return [FollowupAction(name="action_reset_slot")]
+    #
+    # @staticmethod
+    # def test_catalog(df: pd.DataFrame, test: str) -> Dict[Text, Any]:
+    #     # Convert the test string to lowercase for consistent case-insensitive comparison
+    #     test = test.lower()
+    #     print(test)
+    #
+    #     # Search for the test name in both 'name' and 'variants' columns (case-insensitive)
+    #     # Search in 'name' and 'time' columns, case insensitive
+    #     name_match = df['name'].fillna('').str.lower().str.contains(test)
+    #     varinat_match = df['variants'].fillna('').str.lower().str.contains(test)
+    #
+    #     # Combine the matches
+    #     matches = df[name_match | varinat_match]
+    #
+    #     return matches
 
 
 
@@ -187,6 +284,8 @@ class ActionTestCatalog(Action):
 #         message = {"payload": "dropDown", "data": data}
 #         dispatcher.utter_message(json_message=message)
 #         return []
+
+##### Age ###############################################################################################################
 
 class ActionTestSearchAge(Action):
     def name(self) -> Text:
@@ -207,9 +306,6 @@ class ActionTestSearchAge(Action):
             # Parse the response JSON
             df = pd.json_normalize(data)
 
-            # file_path = 'F:\\MSc TUK WS19-20\\Thesis\\Chatbot\\test_catalog_sample.xlsx'
-            # df = pd.read_excel(file_path)
-
             # Use with slot
             age_slot = next(tracker.get_latest_entity_values("age_group"), None)
             age_group = tracker.get_slot("age_group") or age_slot
@@ -222,14 +318,17 @@ class ActionTestSearchAge(Action):
                 if test_name is not None and not test_name.empty:
                     name = test_name['name'].tolist()
                     disorder = test_name['disorder'].tolist() # Extract first row's 'disorder' value
-                    slug = test_name['slug']
+                    slug = test_name['slug'].tolist()
 
                     # Construct the response with corresponding test names and disorders
                     response = f"Hier einige vorgeschlagene Tests:\n"
 
                     # Loop through paired names and disorders
-                    for name, disorder in zip(name, disorder):
-                        response += f"Test Name: <b>{name}</b>\n, Störung: {disorder}\n, Details: https://testbox.de/test/{slug}/details \n"
+                    for name, disorder, slug in zip(name, disorder, slug):
+                        if isinstance(disorder, list):
+                            disorder = ", ".join(disorder) # Join the list of disorders into a comma-separated string
+                        # Construct the response with corresponding test names, disorders, and URLs
+                        response += f"Test: <b>{name}</b>\n Störung: {disorder}\n Details: https://testbox.de/test/{slug}/details \n"
                 else:
                     # when no matching age group found from api
                     response = f"Tut mir leid, ich finde keine test fur {age_group}. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de"
@@ -260,20 +359,8 @@ class ActionTestSearchAge(Action):
 
         return matches
 
-    # def test_search_age(df: pd.DataFrame, age_group: str) -> Dict[Text, Any]:
-    #     # Convert the test string to lowercase for consistent case-insensitive comparison
-    #     age_group = age_group.lower()
-    #     print(age_group)
-    #
-    #     # Search for the test name in both 'name' and 'variants' columns (case-insensitive)
-    #     # Search in 'name' and 'time' columns, case insensitive
-    #     age_match = df['age'].fillna('').str.lower().str.contains(age_group)
-    #     # Combine the matches
-    #     matches = df[age_match]
+##### Disorder ###############################################################################################################
 
-        # return matches
-
-#
 class ActionTestSearchDisorder(Action):
     def name(self) -> Text:
         return "action_test_search_disorder"
@@ -284,12 +371,6 @@ class ActionTestSearchDisorder(Action):
 
         # Load the google sheet
         try:
-            # Get the Google Sheet ID from the environment variable
-            # os.environ["SHEET_URL"] = "1DV9s6gLmgqPT0DioWgUpIVuuZeZQD_AXCpXc-G9TSLk"
-            # sheet_url = os.getenv("SHEET_URL")
-            # if not sheet_url:
-            #     raise ValueError("Sorry, I couldn't find the Google Sheet URL.")
-
             # Construct the URL for CSV export
             GOOGLE_SHEET_URL = f"https://docs.google.com/spreadsheets/d/1DV9s6gLmgqPT0DioWgUpIVuuZeZQD_AXCpXc-G9TSLk/export?format=csv&gid=0"
 
@@ -314,16 +395,16 @@ class ActionTestSearchDisorder(Action):
 
             if test_name is not None and not test_name.empty:
                 name = test_name['name'].tolist()
-                variants = test_name['variants'].tolist()  # Extract first row's 'disorder' value
+                slug = test_name['slug'].tolist()  # Extract first row's 'disorder' value
 
                 # Construct the response with corresponding test names and disorders
-                response = f"Here are some suggested tests for {disorder}:\n"
+                response = f"Hier einige vorgeschlagene Tests für {disorder}:\n"
 
                 # Loop through paired names and disorders
-                for name, variants in zip(name, variants):
-                    if not variants:
-                        variants = "Keine"
-                    response += f"Test Name: {name}, variants: {variants}\n"
+                for name, variants in zip(name, slug):
+
+                    response += f"Name: <b>{name}</b>\n" \
+                                f"Details: https://testbox.de/test/{slug}/details \n"
             else:
                 response = f"Tut mir leid, ich finde keine test fur {disorder}. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de "
 
@@ -347,7 +428,7 @@ class ActionTestSearchDisorder(Action):
 
         # Search for the test name in both 'name' and 'variants' columns (case-insensitive)
         # Search in 'name' and 'time' columns, case insensitive
-        disorder_match = df['disorder'].fillna('').str.lower().str.contains(disorder)
+        disorder_match = df['disorder_german_synonyms'].fillna('').str.lower().str.contains(disorder)
         # Combine the matches
         matches = df[disorder_match]
 

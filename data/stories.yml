@@ -127,7 +127,9 @@ stories:
 - story: search test by age menu
   steps:
   - intent: test_search_age_menu
-  - action: utter_test_search_age_menu
+  - action: utter_test_age_menu
+  - intent: test_search_age
+  - action: action_test_search_age
 
 - story: search test by age
   steps:
