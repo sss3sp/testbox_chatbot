@@ -170,6 +170,24 @@ class ActionTestCatalog(Action):
 
         return matches
 
+
+
+# class ActionTestSearchAge(Action):
+#     def name(self) -> Text:
+#         return "action_test_search_age_menu"
+#
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#
+#
+#         data = [{"label": "Senioren", "value": "adults"},
+#                 {"label": "Jugendliche", "value": "/test_search_age{'age_group':'Jugendliche'}"},
+#                 {"label": "Studenten", "value": "/test_search_age{'age_group':'Studenten'}"}]
+#         message = {"payload": "dropDown", "data": data}
+#         dispatcher.utter_message(json_message=message)
+#         return []
+
 class ActionTestSearchAge(Action):
     def name(self) -> Text:
         return "action_test_search_age"
@@ -203,15 +221,17 @@ class ActionTestSearchAge(Action):
 
                 if test_name is not None and not test_name.empty:
                     name = test_name['name'].tolist()
-                    disorder = test_name['disorder'].tolist()  # Extract first row's 'disorder' value
+                    disorder = test_name['disorder'].tolist() # Extract first row's 'disorder' value
+                    slug = test_name['slug']
 
                     # Construct the response with corresponding test names and disorders
-                    response = f"Here are some suggested tests for {age_group}:\n"
+                    response = f"Hier einige vorgeschlagene Tests:\n"
 
                     # Loop through paired names and disorders
                     for name, disorder in zip(name, disorder):
-                        response += f"Test Name: {name}, Disorder: {disorder}\n"
+                        response += f"Test Name: <b>{name}</b>\n, Störung: {disorder}\n, Details: https://testbox.de/test/{slug}/details \n"
                 else:
+                    # when no matching age group found from api
                     response = f"Tut mir leid, ich finde keine test fur {age_group}. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/test/category. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de"
 
                 dispatcher.utter_message(text=response)

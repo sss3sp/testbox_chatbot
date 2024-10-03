@@ -354,13 +354,13 @@ nlu:
 
 - intent: test_search_age
   examples: |
-    - [Jugendliche](age_group)
-    - [Geriatrie](age_group)
-    - [Senioren](age_group)
-    - [Studenten](age_group)
-    - [Erwachsene](age_group)
-    - [Kinder](age_group)
-    - [Schüler](age_group)
+    - [teenager](age_group)
+    - [geriatrics](age_group)
+    - [elders](age_group)
+    - [students](age_group)
+    - [adults](age_group)
+    - [children](age_group)
+    - [pupils](age_group)
 
 # test catalog by (disorder)
 #
