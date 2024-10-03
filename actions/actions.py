@@ -401,7 +401,7 @@ class ActionTestSearchDisorder(Action):
                 response = f"Hier einige vorgeschlagene Tests für {disorder}:\n"
 
                 # Loop through paired names and disorders
-                for name, variants in zip(name, slug):
+                for name, slug in zip(name, slug):
 
                     response += f"Name: <b>{name}</b>\n" \
                                 f"Details: https://testbox.de/test/{slug}/details \n"
