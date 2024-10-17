@@ -31,83 +31,6 @@ class ActionDefaultFallback(Action):
 
         return [UserUtteranceReverted()]
 
-# class ActionHyperlink(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hyperlink"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#         link1 = "https://testbox.de/browsers"
-#         dispatcher.utter_template("utter_question/supported_devices", tracker, link=link1)
-#
-#         return []
-
-
-# class GoogleSheet(Action):
-#     """Rasa action to parse user text and pull a corresponding answer
-#     from Google Sheets based on the intent and entities.
-#     If there is no answer in the Google Sheet, it will use the ChatGPT API."""
-#
-#     def name(self) -> Text:
-#         return "google_sheet"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         # Set the environment variable for testing purposes
-#         os.environ["SHEET_URL"] = "1aHXOFLyUd6J3elNlCbT1xgKaHN9LAJwCkHjuFKKOzqY"
-#
-#         # Get the latest user text, intent, and entities
-#         user_text = tracker.latest_message.get('text')
-#         intent = tracker.latest_message.get('intent').get('name')
-#         entities = tracker.latest_message.get('entities')
-#
-#         # Fetch the answer from Google Sheets
-#         answer = self.get_answers_from_sheets(intent, entities, user_text)
-#
-#         # Dispatch the response
-#         dispatcher.utter_message(text=answer)
-#
-#         return []
-#
-#     def get_answers_from_sheets(self, intent, entities, user_text):
-#         try:
-#             # Connect to Google Sheets
-#             sheet_url = os.getenv("SHEET_URL")  # Ensure this environment variable is set correctly
-#             if not sheet_url:
-#                 return "Sorry, I couldn't find the Google Sheet URL."
-#
-#             GOOGLE_SHEET_URL = f"https://docs.google.com/spreadsheets/d/{sheet_url}/export?format=csv&gid=0"
-#             response = requests.get(GOOGLE_SHEET_URL)
-#             response.raise_for_status()  # Raise an error for bad status codes
-#
-#             # Read the contents of the URL as a CSV file and store it in a dataframe
-#             proxy_df = pd.read_csv(io.StringIO(response.content.decode('utf-8')))
-#
-#             if entities:
-#                 entity_value = entities[0].get('value')
-#                 filtered_df = proxy_df[(proxy_df['Intent'] == intent) & (proxy_df['Entity'] == entity_value)]
-#
-#                 if filtered_df.empty:
-#                     answer = self.get_answer_from_chatgpt(user_text)
-#                 else:
-#                     answers = filtered_df['Answer'].tolist()
-#                     answer = random.choice(answers)
-#             else:
-#                 answer = self.get_answer_from_chatgpt(user_text)
-#
-#             return answer
-#         except Exception as e:
-#             return f"An error occurred: {str(e)}"
-#
-#     def get_answer_from_chatgpt(self, user_text):
-#         # Placeholder for the ChatGPT API call
-#         # This function should call the OpenAI API and return a response based on the user_text
-#         return "This is a fallback response from ChatGPT API."
-
 
 class ActionTestCatalog(Action):
     def name(self) -> Text:
@@ -267,23 +190,6 @@ class ActionTestCatalog(Action):
     #
     #     return matches
 
-
-
-# class ActionTestSearchAge(Action):
-#     def name(self) -> Text:
-#         return "action_test_search_age_menu"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#
-#         data = [{"label": "Senioren", "value": "adults"},
-#                 {"label": "Jugendliche", "value": "/test_search_age{'age_group':'Jugendliche'}"},
-#                 {"label": "Studenten", "value": "/test_search_age{'age_group':'Studenten'}"}]
-#         message = {"payload": "dropDown", "data": data}
-#         dispatcher.utter_message(json_message=message)
-#         return []
 
 ##### Age ###############################################################################################################
 
@@ -534,24 +440,6 @@ class ActionQuestionsHelp(Action):
         return None  # Return None if no match is found
 
 
-# class TestSearchForm(FormValidationAction):
-#     def name(self) -> Text:
-#         return "action_form_test_search"
-#
-#     @staticmethod
-#     def required_slots(tracker: Tracker) -> List[Text]:
-#         return ["age_group", "disorder"]
-
-
-# # to reset all the slots
-# class ActionSlotReset(Action):
-#     def name(self):
-#         return 'action_slot_reset'
-#
-#     def run(self, dispatcher, tracker, domain):
-#         return [AllSlotsReset()]
-
-# reset the test slot
 class ResetSlot(Action):
     def name(self):
         return "action_reset_slot"
