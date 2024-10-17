@@ -14,11 +14,6 @@ rules:
   - action: utter_greet
   - action: utter_client_therapist
 
-#- rule: ask user if they want to talk to human agent
-#  steps:
-#    - intent: nlu_fallback
-#    - action: utter_nlu_fallback_test
-
 - rule: ask user if they want to talk to human agent
   steps:
   - intent: nlu_fallback

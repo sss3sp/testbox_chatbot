@@ -7,6 +7,11 @@ nlu:
     - hello
     - Hallo
     - hi
+    - HI
+    - Hi
+    - Halo, guten tag
+    - Hallo, guten morgen
+    - Hi, morgen
     - morgen
     - halo
     - guten morgen
@@ -514,12 +519,6 @@ nlu:
     - [Word List](test)
     - [ZAGG](test)
 
-#- intent: test_search_form
-#  examples: |
-#    - Ich möchte nach Tests für eine Störung suchen
-#    - Ich möchte nach Tests für eine Altersgruppe suchen
-#    - Ich habe einige Störungen, welche Tests wären für mich geeignet?
-
 
 # test catalog by (age_group)
 - intent: test_search_age_menu
@@ -539,7 +538,7 @@ nlu:
   examples: |
     - Tests für eine Störung
     - Welche Verfahren gibt es bei [depression](disorder)?
-    - Ich habe eine Störung, ich möchte einige Testvorschläge für diese disorder.
+    - Ich habe eine Störung, ich möchte einige Testvorschläge für [trauma](disorder).
     - Mein Freund hat ein [schlaf](disorder) Problem, welche Tests gibt es dafür?
     - Bitte schlag mir einige Tests für [angst](disorder) vor.
     - Ich habe [depression](disorder), welche Tests kann ich machen?
@@ -600,7 +599,395 @@ nlu:
     - [sport](disorder)
     - [grief](disorder)
     - [parkinson](disorder)
+    - [Angststörung](disorder)
+    - [Furcht](disorder)
+    - [Sorge](disorder)
+    - [Einstellungen](disorder)
+    - [Haltungen](disorder)
+    - [Ansichten](disorder)
+    - [Geriatrie](disorder)
+    - [Altersheilkunde](disorder)
+    - [Altenpflege](disorder)
+    - [Selbstwirksamkeit](disorder)
+    - [Eigenwirksamkeit](disorder)
+    - [Selbstvertrauen](disorder)
+    - [Alltagsleben](disorder)
+    - [Alltagsbewältigung](disorder)
+    - [Tägliche Routine](disorder)
+    - [Trauma](disorder)
+    - [Verletzung](disorder)
+    - [Seelische Belastung](disorder)
+    - [Missbrauch](disorder)
+    - [Übergriff](disorder)
+    - [Ausbeutung](disorder)
+    - [Pflegeassessment](disorder)
+    - [Pflegebeurteilung](disorder)
+    - [Pflegeeinschätzung](disorder)
+    - [Borderline Störung](disorder)
+    - [Grenzstörung](disorder)
+    - [Borderline Persönlichkeit](disorder)
+    - [Persönlichkeitsmerkmale](disorder)
+    - [Charakterzüge](disorder)
+    - [Persönlichkeitseigenschaften](disorder)
+    - [Kompetenzen](disorder)
+    - [Fähigkeiten](disorder)
+    - [Befähigungen](disorder)
+    - [Intelligenz](disorder)
+    - [Klugheit](disorder)
+    - [Schlauheit](disorder)
+    - [Essen](disorder)
+    - [Nahrungsaufnahme](disorder)
+    - [Verzehr](disorder)
+    - [Beruf](disorder)
+    - [Tätigkeit](disorder)
+    - [Beschäftigung](disorder)
+    - [Aufmerksamkeit](disorder)
+    - [Beachtung](disorder)
+    - [Achtsamkeit](disorder)
+    - [ADHD](disorder)
+    - [Aufmerksamkeitsdefizit-Hyperaktivitätsstörung](disorder)
+    - [Stimmungszustand](disorder)
+    - [Gefühlslage](disorder)
+    - [Emotionale Verfassung](disorder)
+    - [Wohlbefinden](disorder)
+    - [Gesundheit](disorder)
+    - [Wohlergehen](disorder)
+    - [Verhalten](disorder)
+    - [Benehmen](disorder)
+    - [Handlungsweise](disorder)
+    - [Sucht](disorder)
+    - [Abhängigkeit](disorder)
+    - [Suchterkrankung](disorder)
+    - [Kognition](disorder)
+    - [Erkenntnis](disorder)
+    - [Denken](disorder)
+    - [Soziale Beziehungen](disorder)
+    - [Zwischenmenschliche Beziehungen](disorder)
+    - [Sozialkontakte](disorder)
+    - [Depression](disorder)
+    - [Niedergeschlagenheit](disorder)
+    - [Schwermut](disorder)
+    - [Suizid](disorder)
+    - [Selbstmord](disorder)
+    - [Freitod](disorder)
+    - [Motivation](disorder)
+    - [Antrieb](disorder)
+    - [Ansporn](disorder)
+    - [Selbstkonzept](disorder)
+    - [Selbstbild](disorder)
+    - [Selbstverständnis](disorder)
+    - [Stressreaktionen](disorder)
+    - [Stressantwort](disorder)
+    - [Belastungsreaktionen](disorder)
+    - [Somatoforme Symptome](disorder)
+    - [Psychosomatische Symptome](disorder)
+    - [Aggressivität](disorder)
+    - [Angriffslust](disorder)
+    - [Gewalttätigkeit](disorder)
+    - [Paranoia](disorder)
+    - [Verfolgungswahn](disorder)
+    - [Misstrauen](disorder)
+    - [Emotionen](disorder)
+    - [Gefühle](disorder)
+    - [Affekte](disorder)
+    - [Körperliche Krankheiten](disorder)
+    - [Physische Erkrankungen](disorder)
+    - [Leibliche Beschwerden](disorder)
+    - [Schmerz](disorder)
+    - [Leiden](disorder)
+    - [Pein](disorder)
+    - [Sexuelles Verhalten](disorder)
+    - [Sexualverhalten](disorder)
+    - [Sexualität](disorder)
+    - [Demenz](disorder)
+    - [Adhd](disorder)
+    - [Gedächtnisschwäche](disorder)
+    - [Geistiger Verfall](disorder)
+    - [Schizophrenie](disorder)
+    - [Spaltungsirresein](disorder)
+    - [Geisteskrankheit](disorder)
+    - [Zwangsstörung](disorder)
+    - [Zwangshandlung](disorder)
+    - [Zwangsneurose](disorder)
+    - [Selbstkontrolle](disorder)
+    - [Selbstbeherrschung](disorder)
+    - [Disziplin](disorder)
+    - [Bewältigung](disorder)
+    - [Umgang](disorder)
+    - [Verarbeitung](disorder)
+    - [Dissoziation](disorder)
+    - [Abspaltung](disorder)
+    - [Trennung](disorder)
+    - [Schlaf](disorder)
+    - [Schlummer](disorder)
+    - [Nachtruhe](disorder)
+    - [Qualitätssicherung](disorder)
+    - [Qualitätskontrolle](disorder)
+    - [Gütesicherung](disorder)
+    - [Reaktionszeit](disorder)
+    - [Reaktionsdauer](disorder)
+    - [Antwortzeit](disorder)
+    - [Bewertung](disorder)
+    - [Beurteilung](disorder)
+    - [Einschätzung](disorder)
+    - [Entwicklung](disorder)
+    - [Wachstum](disorder)
+    - [Fortschritt](disorder)
+    - [Wille](disorder)
+    - [Willenskraft](disorder)
+    - [Entschlusskraft](disorder)
+    - [Leibesübung](disorder)
+    - [Körperbetätigung](disorder)
+    - [Trauer](disorder)
+    - [Kummer](disorder)
+    - [Schmerz](disorder)
+    - [Parkinson](disorder)
+    - [Schüttellähmung](disorder)
+    - [Morbus Parkinson](disorder)
 
+#- synonym: anxiety
+#  examples: |
+#    - Angststörung
+#    - Furcht
+#    - Sorge
+#- synonym: attitudes
+#  examples: |
+#    - Ansichten
+#    - Einstellungen
+#    - Haltungen
+#- synonym: geriatrics
+#  examples: |
+#    - Altenpflege
+#    - Altersheilkunde
+#    - Geriatrie
+#- synonym: self Efficacy
+#  examples: |
+#    - Eigenwirksamkeit
+#    - Selbstvertrauen
+#    - Selbstwirksamkeit
+#- synonym: daily Living
+#  examples: |
+#    - Alltagsbewältigung
+#    - Alltagsleben
+#    - TäglicheRoutine
+#- synonym: trauma
+#  examples: |
+#    - Seelische Belastung
+#    - Trauma
+#    - Verletzung
+#- synonym: abuse
+#  examples: |
+#    - Ausbeutung
+#    - Missbrauch
+#    - Übergriff
+#- synonym: nursing Assessment
+#  examples: |
+#    - Pflegeassessment
+#    - Pflegebeurteilung
+#    - Pflegeeinschätzung
+#- synonym: borderline
+#  examples: |
+#    - Borderline Persönlichkeit
+#    - Borderline Störung
+#    - Grenzstörung
+#- synonym: personality Traits
+#  examples: |
+#    - Charakterzüge
+#    - Persönlichkeitseigenschaften
+#    - Persönlichkeitsmerkmale
+#- synonym: competencies
+#  examples: |
+#    - Befähigungen
+#    - Fähigkeiten
+#    - Kompetenzen
+#- synonym: intelligence
+#  examples: |
+#    - Intelligenz
+#    - Klugheit
+#    - Schlauheit
+#- synonym: eating
+#  examples: |
+#    - Essen
+#    - Nahrungsaufnahme
+#    - Verzehr
+#- synonym: occupation
+#  examples: |
+#    - Beruf
+#    - Beschäftigung
+#    - Tätigkeit
+#- synonym: attention
+#  examples: |
+#    - Achtsamkeit
+#    - Aufmerksamkeit
+#    - Beachtung
+#- synonym: adhd
+#  examples: |
+#    - ADHS
+#    - Aufmerksamkeitsdefizit Hyperaktivitätsstörung
+#- synonym: mood State
+#  examples: |
+#    - Emotionale Verfassung
+#    - Gefühlslage
+#    - Stimmungszustand
+#- synonym: well Being
+#  examples: |
+#    - Gesundheit
+#    - Wohlbefinden
+#    - Wohlergehen
+#- synonym: behavior
+#  examples: |
+#    - Benehmen
+#    - Handlungsweise
+#    - Verhalten
+#- synonym: addiction
+#  examples: |
+#    - Abhängigkeit
+#    - Sucht
+#    - Suchterkrankung
+#- synonym: cognition
+#  examples: |
+#    - Denken
+#    - Erkenntnis
+#    - Kognition
+#- synonym: social Relations
+#  examples: |
+#    - Soziale Beziehungen
+#    - Sozialkontakte
+#    - Zwischenmenschliche Beziehungen
+#- synonym: depression
+#  examples: |
+#    - Depression
+#    - Niedergeschlagenheit
+#    - Schwermut
+#- synonym: suicide
+#  examples: |
+#    - Freitod
+#    - Selbstmord
+#    - Suizid
+#- synonym: motivation
+#  examples: |
+#    - Ansporn
+#    - Antrieb
+#    - Motivation
+#- synonym: self Concept
+#  examples: |
+#    - Selbstbild
+#    - Selbstkonzept
+#    - Selbstverständnis
+#- synonym: stress Reactions
+#  examples: |
+#    - Belastungsreaktionen
+#    - Stressantwort
+#    - Stressreaktionen
+#- synonym: somatoform Symptoms
+#  examples: |
+#    - Körperliche Beschwerdenohneorganische Ursache
+#    - Psychosomatische Symptome
+#    - Somatoforme Symptome
+#- synonym: aggressiveness
+#  examples: |
+#    - Aggressivität
+#    - Angriffslust
+#    - Gewalttätigkeit
+#- synonym: paranoia
+#  examples: |
+#    - Misstrauen
+#    - Paranoia
+#    - Verfolgungswahn
+#- synonym: emotions
+#  examples: |
+#    - Affekte
+#    - Emotionen
+#    - Gefühle
+#- synonym: physical Illnesses
+#  examples: |
+#    - Körperliche Krankheiten
+#    - Leibliche Beschwerden
+#    - Physische Erkrankungen
+#- synonym: pain
+#  examples: |
+#    - Leiden
+#    - Pein
+#    - Schmerz
+#- synonym: sexual Behavior
+#  examples: |
+#    - Sexualität
+#    - Sexualverhalten
+#    - Sexuelles Verhalten
+#- synonym: dementia
+#  examples: |
+#    - Demenz
+#    - Gedächtnisschwäche
+#    - Geistiger Verfall
+#- synonym: schizophrenia
+#  examples: |
+#    - Geisteskrankheit
+#    - Schizophrenie
+#    - Spaltungsirresein
+#- synonym: compulsive Disorder
+#  examples: |
+#    - Zwangshandlung
+#    - Zwangsneurose
+#    - Zwangsstörung
+#- synonym: self Control
+#  examples: |
+#    - Disziplin
+#    - Selbstbeherrschung
+#    - Selbstkontrolle
+#- synonym: coping
+#  examples: |
+#    - Bewältigung
+#    - Umgang
+#    - Verarbeitung
+#- synonym: dissociation
+#  examples: |
+#    - Abspaltung
+#    - Dissoziation
+#    - Trennung
+#- synonym: sleep
+#  examples: |
+#    - Nachtruhe
+#    - Schlaf
+#    - Schlummer
+#- synonym: quality Assurance
+#  examples: |
+#    - Gütesicherung
+#    - Qualitätskontrolle
+#    - Qualitätssicherung
+#- synonym: reaction Time
+#  examples: |
+#    - Antwortzeit
+#    - Reaktionsdauer
+#    - Reaktionszeit
+#- synonym: evaluation
+#  examples: |
+#    - Beurteilung
+#    - Bewertung
+#    - Einschätzung
+#- synonym: development
+#  examples: |
+#    - Entwicklung
+#    - Fortschritt
+#    - Wachstum
+#- synonym: volition
+#  examples: |
+#    - Entschlusskraft
+#    - Wille
+#    - Willenskraft
+#- synonym: sport
+#  examples: |
+#    - Körperbetätigung
+#    - Leibesübung
+#    - Sport
+#- synonym: grief
+#  examples: |
+#    - Kummer
+#    - Trauer
+#- synonym: parkinson
+#  examples: |
+#    - Morbus Parkinson
+#    - Parkinson
+#    - Schüttellähmung
 
 
 # Thanks and bye
@@ -661,7 +1048,8 @@ nlu:
 
 
 
- 
+
+
 
 
     
