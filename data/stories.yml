@@ -85,22 +85,14 @@ stories:
   - action: utter_test_battery_usage
   - action: utter_feedback
 
-#Testing Purpose
-#- story: answer from google sheets
-#  steps:
-#  - intent: google_sheet
-#  - action: google_sheet
-#  - action: utter_feedback
 
 # Test Catalog
-
 - story: test catalog menu
   steps:
   - intent: test_catalog_menu
   - action: utter_test_catalog_menu
 
 # Ask Test Name
-
 - story: details about any particular test
   steps:
   - intent: test_catalog
@@ -143,14 +135,6 @@ stories:
   - action: utter_test_search_disorder
   - intent: test_search_disorder_name
   - action: action_test_search_disorder
-
-
-
-
-
-
-
-
 
 
 #Thanks and goodbye

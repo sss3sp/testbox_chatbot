@@ -18,6 +18,7 @@ from rasa_sdk.events import UserUtteranceReverted, SlotSet, AllSlotsReset, Follo
 # import random
 # import re
 
+# Catching Mistakes, Failures and Human Handover Action
 class ActionDefaultFallback(Action):
 
     def name(self) -> Text:
@@ -31,7 +32,16 @@ class ActionDefaultFallback(Action):
 
         return [UserUtteranceReverted()]
 
+# Resetting all the slots
+class ResetSlot(Action):
+    def name(self):
+        return "action_reset_slot"
 
+    def run(self, dispatcher, tracker, domain):
+        return [SlotSet("test", None), SlotSet("age_group", None), SlotSet("disorder", None)]
+
+
+# Searching the tests by test name from API data, optional solution for google sheet is also provided in option 2
 class ActionTestCatalog(Action):
     def name(self) -> Text:
         return "action_test_catalog"
@@ -40,10 +50,7 @@ class ActionTestCatalog(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-#### Data Source #################################################################
-##################################################################################
-
-        # Option 1: Fetch data from the API
+        # Option 1: Fetch data from the API, uncomment this from here till end when option 2 is needed
         url = 'https://api.testbox.de/api/test/list'
         response = requests.get(url)
 
@@ -117,9 +124,8 @@ class ActionTestCatalog(Action):
 
         return matches
 
-###########################################################################################################
-#Option 2: Google Sheet, please uncomment the following when needed and comment out the above codes inside # tags
-# Load the google sheet
+    #Option 2: Google Sheet, please uncomment the following when needed and comment out the above codes inside # tags
+    # Load the google sheet
 
     #     try:
     #         # Construct the URL for CSV export
@@ -191,8 +197,7 @@ class ActionTestCatalog(Action):
     #     return matches
 
 
-##### Age ###############################################################################################################
-
+# Searching the tests by Age group from API data
 class ActionTestSearchAge(Action):
     def name(self) -> Text:
         return "action_test_search_age"
@@ -265,8 +270,8 @@ class ActionTestSearchAge(Action):
 
         return matches
 
-##### Disorder ###############################################################################################################
 
+# Searching the tests by disorder name from Google Sheet
 class ActionTestSearchDisorder(Action):
     def name(self) -> Text:
         return "action_test_search_disorder"
@@ -340,7 +345,8 @@ class ActionTestSearchDisorder(Action):
 
         return matches
 
-###FAQ###****************************************************************************************************************
+# Searching the answers for FAQ from Google sheet, optional solution to search from API data is also provided in option 2,
+# comment out from Option 1 till option 2 and uncomment option 2 when needed
 class ActionQuestionsHelp(Action):
     def name(self) -> Text:
         return "action_faq"
@@ -364,17 +370,29 @@ class ActionQuestionsHelp(Action):
             # Step 2: Load intent examples from nlu.yml
             intent_examples = self.load_intent_examples_from_nlu(topic)
 
-            # Step 3: Fetch data from the API
-            url = 'https://api.testbox.de/api/help/data'
-            response = requests.get(url)
+            # Step 3
+            # Option 1: Load data from google sheet
+            try:
+                # Construct the URL for CSV export
+                GOOGLE_SHEET_URL = f"https://docs.google.com/spreadsheets/d/1rVFwy-R2noNlYDjVqo1fgBjnXdBwh2B0qXHFAdp412M/export?format=csv"
 
-            if response.status_code == 200:
-                data = response.json()
-                # Access the 'articles' list inside the 'data' dictionary
-                articles_data = data.get('articles', [])
+                # Fetch the CSV file from the Google Sheets URL
+                response = requests.get(GOOGLE_SHEET_URL)
+                response.raise_for_status()  # Raise an error for bad status codes
 
-                # Step 4: Normalize the API data using pandas
-                df = pd.json_normalize(articles_data)
+                # Read the contents of the CSV file and store it in a pandas dataframe
+                df = pd.read_csv(io.StringIO(response.content.decode('utf-8')), sep=',', header=0)
+
+                # Print the raw data to debug what was loaded
+                print(df.head())  # Show first few rows of data
+                print(f"Column names in DataFrame: {df.columns}")  # Print out the column names
+
+
+                # Ensure 'title' and 'text' columns exist
+                if 'title' in df.columns and 'text' in df.columns:
+                    print("Successfully loaded data from Google Sheet.")
+                else:
+                    print("Error: 'title' or 'text' column not found in Google Sheet.")
 
                 # Step 5: Match intent examples with the "title" field in API data
                 matched_article = self.match_intent_example(intent_examples, df)
@@ -386,17 +404,58 @@ class ActionQuestionsHelp(Action):
 
                 elif matched_article is None:
                     # If no matched article is found, use the fallback utterance from the domain file
-                    print(f"No match found, Answer from utter_question/{topic}") # Debug print
+                    print(f"No match found, Answer from utter_question/{topic}")  # Debug print
                     dispatcher.utter_message(response=f"utter_question/{topic}")
 
                 else:
-                    dispatcher.utter_message(text="Leider konnte ich keine Antwort auf Ihre Frage finden. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
-            else:
-                dispatcher.utter_message(text="Leider konnte ich zu diesem Zeitpunkt keine Daten von der API abrufen. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
+                    dispatcher.utter_message(
+                        text="Leider konnte ich keine Antwort auf Ihre Frage finden. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
+
+            except Exception as e:
+                print(f"Error loading Google Sheet: {str(e)}")
+                dispatcher.utter_message(
+                text="Leider konnte ich zu diesem Zeitpunkt keine Daten von der API abrufen. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
+
+
         else:
-            dispatcher.utter_message(text="Leider konnte ich die Intent Ihrer Anfrage nicht erkennen. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
+            dispatcher.utter_message(
+                text="Leider konnte ich die Intent Ihrer Anfrage nicht erkennen. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
 
         return []
+
+            # Option 2: Fetch data from the API
+        #     url = 'https://api.testbox.de/api/help/data'
+        #     response = requests.get(url)
+        #
+        #     if response.status_code == 200:
+        #         data = response.json()
+        #         # Access the 'articles' list inside the 'data' dictionary
+        #         articles_data = data.get('articles', [])
+        #
+        #         # Step 4: Normalize the API data using pandas
+        #         df = pd.json_normalize(articles_data)
+        #
+        #         # Step 5: Match intent examples with the "title" field in API data
+        #         matched_article = self.match_intent_example(intent_examples, df)
+        #
+        #         if matched_article is not None:
+        #             # Send the response from the matched API data
+        #             response_text = matched_article.get('text')
+        #             dispatcher.utter_message(text=response_text)
+        #
+        #         elif matched_article is None:
+        #             # If no matched article is found, use the fallback utterance from the domain file
+        #             print(f"No match found, Answer from utter_question/{topic}") # Debug print
+        #             dispatcher.utter_message(response=f"utter_question/{topic}")
+        #
+        #         else:
+        #             dispatcher.utter_message(text="Leider konnte ich keine Antwort auf Ihre Frage finden. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
+        #     else:
+        #         dispatcher.utter_message(text="Leider konnte ich zu diesem Zeitpunkt keine Daten von der API abrufen. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
+        # else:
+        #     dispatcher.utter_message(text="Leider konnte ich die Intent Ihrer Anfrage nicht erkennen. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
+        #
+        # return []
 
     def load_intent_examples_from_nlu(self, topic: str) -> List[str]:
         """
@@ -432,17 +491,12 @@ class ActionQuestionsHelp(Action):
         # Iterate over the DataFrame to find matching titles
         for _, row in df.iterrows():
             title = row['title'].lower()
-
             # Check if any intent example matches the title
             if any(example in title for example in intent_examples):
+                print(f"Matched with title: {title}")
                 return row.to_dict()  # Return the matched row as a dictionary
 
+        print("No match found.")
         return None  # Return None if no match is found
 
 
-class ResetSlot(Action):
-    def name(self):
-        return "action_reset_slot"
-
-    def run(self, dispatcher, tracker, domain):
-        return [SlotSet("test", None), SlotSet("age_group", None), SlotSet("disorder", None)]

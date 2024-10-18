@@ -24,46 +24,113 @@ nlu:
 
 #Ask any question
 - intent: ask_question
+  examples: |
+    - Ich habe eine Frage
+    - Ich möchte etwas wissen
 
 #Therapist Menu
 - intent: therapist
+  examples: |
+    - Hallo, ich bin ein Therapeut
+    - Ich bin ein Therapeut
+    - Ich arbeite als Therapeut
 
-#Feedback after every questions
-- intent: feedback
-- intent: feedback_therapist
-- intent: feedback_yes
-- intent: feedback_yes_therapist
-- intent: feedback_no
-
-
-
-
-
-#Human handover
-- intent: fallback_human
-
-
-
-#Therapist Menu List
+#Therapist Menu Options
 - intent: konto_abonnements
+  examples: |
+    - Ich habe ein Problem mit meinem Konto
+    - Ich möchte mein Konto aktualisieren
+
+- intent: question_credit_use
+  examples: |
+    - Kann ich ein bestehendes Guthaben verwenden, wenn ich mein Konto erweitere?
+    - Wie kann ich mein bisheriges Kreditkartenguthaben nutzen, wenn ich mein Konto erweitere?
+
 - intent: test_battery_menu
+  examples: |
+    - Ich möchte etwas über die Testbatterie erfahren
+    - Wie kann ich eine Testbatterie erstellen?
+
 - intent: test_battery_def
   examples: |
     - Was ist eine Testbatterie?
     - Wie definiert man den Begriff "Testbatterie"?
     - Was umfasst eine Testbatterie?
     - Welche Funktion hat eine Testbatterie?
+
 - intent: test_battery_usage
   examples: |
     - Kann ich die Testbatterie für bezahlte Tests verwenden?
-- intent: question_credit_use
+    - Kann ich eine Testbatterie verwenden?
+
+
+#Feedback after every questions
+- intent: feedback
   examples: |
-    - Kann ich ein bestehendes Guthaben verwenden, wenn ich mein Konto erweitere?
+    - Hat es geholfen?
+    - Hat das geholfen?
 
+- intent: feedback_therapist
+  examples: |
+    - Hat der Therapeutenbereich geholfen?
+    - Hat der Therapeutenabschnitt geholfen?
 
+- intent: feedback_yes
+  examples: |
+    - Das ist richtig
+    - richtig sagen
 
+- intent: feedback_yes_therapist
+  examples: |
+    - Das ist korrekt
+    - Sie sind korrekt
 
-#Questions from Help Page
+- intent: feedback_no
+  examples: |
+    - Nein, es hat mir nicht geholfen.
+    - Sie sind nicht richtig
+
+#Human handover
+- intent: fallback_human
+  examples: |
+    - Ich möchte mit einer Person sprechen
+    - Ich möchte mit einem Menschen sprechen
+    - Ich möchte nicht mit einem Bot sprechen
+    - Ich möchte nicht mit einer Maschine sprechen
+    - Ich möchte mit den Gründern sprechen
+    - Gibt es auch Menschen, die für Ihr Unternehmen arbeiten?
+    - Kann ich mit einem Menschen sprechen?
+    - Kann ich bitte mit einem Menschen sprechen?
+    - Können Sie mich an Ihr Team weiterleiten?
+    - können Sie mich mit einem Menschen verbinden?
+    - Haben Sie einen menschlichen Support?
+
+# Thanks and bye
+- intent: thanks
+  examples: |
+    - thanks
+    - ok
+    - okay
+    - alright
+    - Danke
+    - Dankeschon
+    - Gerne
+    - Danke ihnen
+
+- intent: goodbye
+  examples: |
+    - Bye
+    - Tschuss
+    - Auf Wiedersehen
+    - tschüss 
+    - tschüs
+    - tschau
+    - tschauie
+    - tschö
+    - ciao
+  
+
+  #Questions from Help Page
 - intent: question/test_assignment_remote_device
   examples: |
     - Was passiert nach der Zuweisung eines Tests “Auf einem entfernten Gerät”?
@@ -306,6 +373,20 @@ nlu:
 ### Test Catalog ******************************************************************************************************
 - intent: test_catalog_menu
 
+
+# test catalog by (age_group)
+- intent: test_search_age_menu
+
+- intent: test_search_age
+  examples: |
+    - [teenager](age_group)
+    - [geriatrics](age_group)
+    - [elders](age_group)
+    - [students](age_group)
+    - [adults](age_group)
+    - [children](age_group)
+    - [pupils](age_group)
+
 # test catalog by test name
 - intent: test_catalog
   examples: |
@@ -520,19 +601,6 @@ nlu:
     - [ZAGG](test)
 
 
-# test catalog by (age_group)
-- intent: test_search_age_menu
-
-- intent: test_search_age
-  examples: |
-    - [teenager](age_group)
-    - [geriatrics](age_group)
-    - [elders](age_group)
-    - [students](age_group)
-    - [adults](age_group)
-    - [children](age_group)
-    - [pupils](age_group)
-
 # test catalog by (disorder)
 - intent: test_search_disorder
   examples: |
@@ -745,306 +813,6 @@ nlu:
     - [Schüttellähmung](disorder)
     - [Morbus Parkinson](disorder)
 
-#- synonym: anxiety
-#  examples: |
-#    - Angststörung
-#    - Furcht
-#    - Sorge
-#- synonym: attitudes
-#  examples: |
-#    - Ansichten
-#    - Einstellungen
-#    - Haltungen
-#- synonym: geriatrics
-#  examples: |
-#    - Altenpflege
-#    - Altersheilkunde
-#    - Geriatrie
-#- synonym: self Efficacy
-#  examples: |
-#    - Eigenwirksamkeit
-#    - Selbstvertrauen
-#    - Selbstwirksamkeit
-#- synonym: daily Living
-#  examples: |
-#    - Alltagsbewältigung
-#    - Alltagsleben
-#    - TäglicheRoutine
-#- synonym: trauma
-#  examples: |
-#    - Seelische Belastung
-#    - Trauma
-#    - Verletzung
-#- synonym: abuse
-#  examples: |
-#    - Ausbeutung
-#    - Missbrauch
-#    - Übergriff
-#- synonym: nursing Assessment
-#  examples: |
-#    - Pflegeassessment
-#    - Pflegebeurteilung
-#    - Pflegeeinschätzung
-#- synonym: borderline
-#  examples: |
-#    - Borderline Persönlichkeit
-#    - Borderline Störung
-#    - Grenzstörung
-#- synonym: personality Traits
-#  examples: |
-#    - Charakterzüge
-#    - Persönlichkeitseigenschaften
-#    - Persönlichkeitsmerkmale
-#- synonym: competencies
-#  examples: |
-#    - Befähigungen
-#    - Fähigkeiten
-#    - Kompetenzen
-#- synonym: intelligence
-#  examples: |
-#    - Intelligenz
-#    - Klugheit
-#    - Schlauheit
-#- synonym: eating
-#  examples: |
-#    - Essen
-#    - Nahrungsaufnahme
-#    - Verzehr
-#- synonym: occupation
-#  examples: |
-#    - Beruf
-#    - Beschäftigung
-#    - Tätigkeit
-#- synonym: attention
-#  examples: |
-#    - Achtsamkeit
-#    - Aufmerksamkeit
-#    - Beachtung
-#- synonym: adhd
-#  examples: |
-#    - ADHS
-#    - Aufmerksamkeitsdefizit Hyperaktivitätsstörung
-#- synonym: mood State
-#  examples: |
-#    - Emotionale Verfassung
-#    - Gefühlslage
-#    - Stimmungszustand
-#- synonym: well Being
-#  examples: |
-#    - Gesundheit
-#    - Wohlbefinden
-#    - Wohlergehen
-#- synonym: behavior
-#  examples: |
-#    - Benehmen
-#    - Handlungsweise
-#    - Verhalten
-#- synonym: addiction
-#  examples: |
-#    - Abhängigkeit
-#    - Sucht
-#    - Suchterkrankung
-#- synonym: cognition
-#  examples: |
-#    - Denken
-#    - Erkenntnis
-#    - Kognition
-#- synonym: social Relations
-#  examples: |
-#    - Soziale Beziehungen
-#    - Sozialkontakte
-#    - Zwischenmenschliche Beziehungen
-#- synonym: depression
-#  examples: |
-#    - Depression
-#    - Niedergeschlagenheit
-#    - Schwermut
-#- synonym: suicide
-#  examples: |
-#    - Freitod
-#    - Selbstmord
-#    - Suizid
-#- synonym: motivation
-#  examples: |
-#    - Ansporn
-#    - Antrieb
-#    - Motivation
-#- synonym: self Concept
-#  examples: |
-#    - Selbstbild
-#    - Selbstkonzept
-#    - Selbstverständnis
-#- synonym: stress Reactions
-#  examples: |
-#    - Belastungsreaktionen
-#    - Stressantwort
-#    - Stressreaktionen
-#- synonym: somatoform Symptoms
-#  examples: |
-#    - Körperliche Beschwerdenohneorganische Ursache
-#    - Psychosomatische Symptome
-#    - Somatoforme Symptome
-#- synonym: aggressiveness
-#  examples: |
-#    - Aggressivität
-#    - Angriffslust
-#    - Gewalttätigkeit
-#- synonym: paranoia
-#  examples: |
-#    - Misstrauen
-#    - Paranoia
-#    - Verfolgungswahn
-#- synonym: emotions
-#  examples: |
-#    - Affekte
-#    - Emotionen
-#    - Gefühle
-#- synonym: physical Illnesses
-#  examples: |
-#    - Körperliche Krankheiten
-#    - Leibliche Beschwerden
-#    - Physische Erkrankungen
-#- synonym: pain
-#  examples: |
-#    - Leiden
-#    - Pein
-#    - Schmerz
-#- synonym: sexual Behavior
-#  examples: |
-#    - Sexualität
-#    - Sexualverhalten
-#    - Sexuelles Verhalten
-#- synonym: dementia
-#  examples: |
-#    - Demenz
-#    - Gedächtnisschwäche
-#    - Geistiger Verfall
-#- synonym: schizophrenia
-#  examples: |
-#    - Geisteskrankheit
-#    - Schizophrenie
-#    - Spaltungsirresein
-#- synonym: compulsive Disorder
-#  examples: |
-#    - Zwangshandlung
-#    - Zwangsneurose
-#    - Zwangsstörung
-#- synonym: self Control
-#  examples: |
-#    - Disziplin
-#    - Selbstbeherrschung
-#    - Selbstkontrolle
-#- synonym: coping
-#  examples: |
-#    - Bewältigung
-#    - Umgang
-#    - Verarbeitung
-#- synonym: dissociation
-#  examples: |
-#    - Abspaltung
-#    - Dissoziation
-#    - Trennung
-#- synonym: sleep
-#  examples: |
-#    - Nachtruhe
-#    - Schlaf
-#    - Schlummer
-#- synonym: quality Assurance
-#  examples: |
-#    - Gütesicherung
-#    - Qualitätskontrolle
-#    - Qualitätssicherung
-#- synonym: reaction Time
-#  examples: |
-#    - Antwortzeit
-#    - Reaktionsdauer
-#    - Reaktionszeit
-#- synonym: evaluation
-#  examples: |
-#    - Beurteilung
-#    - Bewertung
-#    - Einschätzung
-#- synonym: development
-#  examples: |
-#    - Entwicklung
-#    - Fortschritt
-#    - Wachstum
-#- synonym: volition
-#  examples: |
-#    - Entschlusskraft
-#    - Wille
-#    - Willenskraft
-#- synonym: sport
-#  examples: |
-#    - Körperbetätigung
-#    - Leibesübung
-#    - Sport
-#- synonym: grief
-#  examples: |
-#    - Kummer
-#    - Trauer
-#- synonym: parkinson
-#  examples: |
-#    - Morbus Parkinson
-#    - Parkinson
-#    - Schüttellähmung
-
-
-# Thanks and bye
-- intent: thanks
-  examples: |
-    - thanks
-    - ok
-    - okay
-    - alright
-    - Danke
-    - Dankeschon
-    - Gerne
-    - Danke ihnen
-- intent: goodbye
-  examples: |
-    - Bye
-    - Tschuss
-    - Auf Wiedersehen
-    - tschüss 
-    - tschüs
-    - tschau
-    - tschauie
-    - tschö
-    - ciao
-
-#Human Handover request from user
-- intent: human_handoff
-  examples: |
-    - Ich möchte einen Menschen sprechen
-    - Kann ich mit einem Makler sprechen?
-    - einen echten Agenten bitte
-    - echter Mensch
-    - Chat mit einem Live-Agenten
-    - Geben Sie mir bitte einen Menschen
-    - Ich möchte mit einem Menschen sprechen
-    - Können Sie mich mit einem Menschen verbinden?
-    - Mit einem Menschen sprechen
-    - Mensch bitte
-    - Ich brauche Hilfe von einem Menschen
-    - Gib mir einen Menschen
-    - Ich möchte einen Vertreter
-    - ich möchte mit einem Menschen sprechen
-    - Ich möchte nicht mit einem Bot sprechen
-    - Ich möchte nicht mit einer Maschine sprechen
-    - Ich möchte mit den Gründern sprechen
-    - Gibt es auch Menschen, die für Ihr Unternehmen arbeiten?
-    - Kann ich mit einem Menschen sprechen?
-    - Kann ich bitte mit einem Menschen sprechen?
-    - Können Sie mich an Ihr Team weiterleiten?
-    - können Sie mich mit einem Menschen verbinden?
-    - Haben Sie einen menschlichen Support?
-
-#Testing Purpose
-- intent: google_sheet
-  examples: |
-    - Was ist ein Hund?
-    - Was ist ein man?
 
 
 
