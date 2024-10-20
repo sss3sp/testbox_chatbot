@@ -8,37 +8,34 @@ stories:
   - intent: greet
   - action: utter_greet
   - action: utter_client_therapist
+##
+- story: main menu
+  steps:
+  - intent: client_therapist
+  - action: utter_client_therapist
+##
+- story: client menu
+  steps:
+  - intent: client_menu
+  - action: utter_client_menu
+  - intent: faq
+  - action: action_faq
+  - action: utter_feedback
 
 #therapist, question, feedback_therapist, feedback_yes_therapist
 - story: therapist menu
   steps:
-  - intent: therapist
-  - action: utter_therapist
-  - intent: question
+  - intent: therapist_menu
+  - action: utter_therapist_menu
+  - intent: faq
   - action: action_faq
-  - action: utter_feedback_therapist
-  - intent: feedback_yes_therapist
-  - action: utter_feedback_yes_therapist
+  - action: utter_feedback
 
 #question, feedback
 - story: asking questions
   steps:
-  - intent: question
+  - intent: faq
   - action: action_faq
-  - action: utter_feedback
-
-##new_question, feedback
-#- story: asking questions
-#  steps:
-#  - intent: new_question
-#  - action: utter_new_question
-#  - action: utter_feedback
-
-#question_credit_use, utter_feedback
-- story: asking questions about existing credit
-  steps:
-  - intent: question_credit_use
-  - action: utter_question_credit_use
   - action: utter_feedback
 
 #feedback_yes
@@ -62,8 +59,8 @@ stories:
 #konto_abonnements
 - story: account and subscription
   steps:
-  - intent: konto_abonnements
-  - action: utter_konto_abonnements
+  - intent: konto_abonnements_menu
+  - action: utter_konto_abonnements_menu
 
 #test_battery_menu
 - story: test battery
@@ -71,20 +68,11 @@ stories:
   - intent: test_battery_menu
   - action: utter_test_battery_menu
 
-#test_battery_def
-- story: asking about test battery definition
+#test_procedure_menu
+- story: test procedure
   steps:
-  - intent: test_battery_def
-  - action: utter_test_battery_def
-  - action: utter_feedback
-
-#test_battery_usage
-- story: asking about test battery usage
-  steps:
-  - intent: test_battery_usage
-  - action: utter_test_battery_usage
-  - action: utter_feedback
-
+  - intent: test_procedure_menu
+  - action: utter_test_procedure_menu
 
 # Test Catalog
 - story: test catalog menu

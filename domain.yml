@@ -2,34 +2,28 @@ version: "3.1"
 
 intents:
   - greet
-  - goodbye
-  - question
-  - new_question
-  - question_credit_use
-  - thanks
-  - feedback
-  - feedback_therapist
-  - feedback_yes
-  - feedback_yes_therapist
-  - feedback_no
   - ask_question
   - client_therapist
-  - fallback_human
-  - therapist
-  - konto_abonnements
+  - client_menu
+  - therapist_menu
+  - konto_abonnements_menu
   - test_battery_menu
-  - test_battery_def
-  - test_battery_usage
-  - google_sheet
-  - test_catalog
-  - test_name
-  - ask_test_name
-  - test_search_age
-  - test_search_age_menu
+  - test_procedure_menu
+  - feedback
+  - feedback_yes
+  - feedback_no
+  - fallback_human
+  - faq
+  - thanks
+  - goodbye
   - test_catalog_menu
+  - test_catalog
+  - ask_test_name
+  - test_name
+  - test_search_age_menu
+  - test_search_age
   - test_search_disorder
   - test_search_disorder_name
-
 
 
 entities:
@@ -63,64 +57,87 @@ responses:
   - text: "Sind Sie ein ..."
     buttons:
       - title: "Kunde"
-        payload: /ask_question
+        payload: /client_menu
       - title: "Psychotherapeut"
-        payload: /therapist
+        payload: /therapist_menu
 
 #Ask any question
   utter_ask_question:
   - text: "Bitte schreiben Sie Ihre Frage"
 
 
+#If the user select client, then client menu
+  utter_client_menu:
+  - text: "An welchen der folgenden Themen sind Sie interessiert?"
+    buttons:
+      - title: "Wie kann ich den Test durchführen?"
+        payload: "Wie komme ich zu dem Test?"
+      - title: "Test Catalog"
+        payload: /test_catalog_menu
+      - title: "Andere Frage"
+        payload: /ask_question
+
+
+
 #If the user select therapist, then therapist menu
-  utter_therapist:
+  utter_therapist_menu:
   - text: "An welchen der folgenden Themen sind Sie interessiert?"
     buttons:
       - title: "Konto & Abonnements"
-        payload: /konto_abonnements
+        payload: /konto_abonnements_menu
       - title: "Test Catalog"
         payload: /test_catalog_menu
       - title: "Test-Batterie"
         payload: /test_battery_menu
+      - title: "Testverfahren"
+        payload: /test_procedure_menu
       - title: "Andere Frage"
         payload: /ask_question
 
 #Therpaist menu options with suggested questions
 #Accounts & Subscriptions
-  utter_konto_abonnements:
+  utter_konto_abonnements_menu:
   - text: "Wie kann ich Ihnen helfen?"
     buttons:
+      - title: "Abo-Möglichkeiten"
+        payload: "Was gibt es für Abo-Möglichkeiten auf der testbox?"
+      - title: "Empfehlungsbonus"
+        payload: "Wie funktioniert der Empfehlungsbonus?"
       - title: "Kann ich ein bestehendes Guthaben verwenden, wenn ich mein Konto erweitere?"
-        payload: /question_credit_use
-      - title: "Aktuelle Abonnementpläne"
-        payload: /ask_question
+        payload: "Kann ich ein bestehendes Guthaben verwenden, wenn ich mein Konto erweitere?"
       - title: "Andere Frage"
         payload: /ask_question
       - title: "Zurückgehen"
-        payload: /therapist
+        payload: /therapist_menu
 
-  utter_question_credit_use:
-    - text: "Ja! das Praxisguthaben kann weiterverwendet werden für die Durchführung lizenzierter Verfahren."
 
 #Test battery
   utter_test_battery_menu:
   - text: "Wie kann ich Ihnen helfen?"
     buttons:
       - title: "Was ist eine Testbatterie?"
-        payload: /test_battery_def
-      - title: "Kann ich die Testbatterie für bezahlte Tests verwenden?"
-        payload: /test_battery_usage
+        payload: "Was ist eine Testbatterie?"
+      - title: "Testbatterie für bezahlte Tests"
+        payload: "Kann ich die Testbatterie für bezahlte Tests verwenden?"
       - title: "Andere Frage"
         payload: /ask_question
       - title: "Zurückgehen"
-        payload: /therapist
+        payload: /therapist_menu
 
-  utter_test_battery_def:
-    - text: "In einer Testbatterie können Sie alle Testpakete zusammenstellen. Dies können Sie unter \"Meine Praxis\", \"Batterien\", \"Neue Batterie\" tun. Oder ganz einfach im „Testkatalog“, „Batterien“, „Batterie hinzufügen“
-          Videoanleitung: https://youtu.be/Ipp4WLntbIc"
-
-  utter_test_battery_usage:
-    - text: " Sie können alle auf der testbox verfügbaren Verfahren zu einer Testbatterie hinzufügen."
+#Test battery
+  utter_test_procedure_menu:
+  - text: "Wie kann ich Ihnen helfen?"
+    buttons:
+      - title: "Wie kann ich einen Test starten?"
+        payload: "Wie kann ich einen Test starten?"
+      - title: "Was tue ich wenn es einen Test noch nicht gibt?"
+        payload: "Was tue ich wenn es einen Test noch nicht gibt?"
+      - title: "Kostet die Auswertung eines Tests extra?"
+        payload: "Kostet die Auswertung eines Tests extra?"
+      - title: "Andere Frage"
+        payload: /ask_question
+      - title: "Zurückgehen"
+        payload: /therapist_menu
 
 
 #Feedback after every questions
@@ -132,29 +149,14 @@ responses:
       - title: "Nein"
         payload: /feedback_no
 
-  utter_feedback_therapist:
-    - text: "Hat es geholfen?"
-      buttons:
-        - title: "Ja"
-          payload: /feedback_yes_therapist
-        - title: "Nein"
-          payload: /feedback_no
-
   utter_feedback_yes:
   - text: "Das ist wirklich toll. Haben Sie noch weitere Fragen?!"
     buttons:
       - title: "Ja,ich habe"
-        payload: /ask_question
+        payload: /client_therapist
       - title: "Nein, Danke"
         payload: /thanks
 
-  utter_feedback_yes_therapist:
-  - text: "Das ist wirklich toll. Haben Sie noch weitere Fragen?!"
-    buttons:
-      - title: "Ja,ich habe"
-        payload: /therapist
-      - title: "Nein, Danke"
-        payload: /thanks
 
   utter_feedback_no:
   - text: "Tut mir leid, ich konnte Ihnen nicht helfen. Benötigen Sie Hilfe von unserem Kundendienstmitarbeiter?"
@@ -168,7 +170,7 @@ responses:
   utter_fallback_human:
   - text: "Ich leite Sie an einen unserer Kundendienstmitarbeiter weiter. Bitte warten Sie einen Moment..."
 
-  # Thanks and bye
+# Thanks and bye
   utter_thanks:
   - text: "Bitteschon! Ich wünsche Ihnen einen schönen Tag."
   - text: "Gerne! Ich wünsche Ihnen einen schönen Tag."
@@ -176,67 +178,9 @@ responses:
   utter_goodbye:
   - text: "Ich wünsche noch einen schönen Tag."
 
-#Questions from Help Page
-
-  utter_question/def_test_assignment_remote_device:
-  - text: "Die Zuweisung „Auf einem entfernten Gerät“ dient zur Durchführung in Ihrer Praxis auf einem nahegelegenen Tablet oder einem Laptop. Sie können zur Durchführung entweder den QR-Code einscannen oder den Testschlüssel eingeben. Gehen Sie hierzu auf testbox.de und wählen Sie „Testschlüssel“. Hierzu dürfen Sie auf dem nahegelegenen Gerät nicht eingeloggt sein.
-          Sie können alternativ die Option wählen „auf diesem Gerät durchführen“ und „später durchführen“ und dann die Durchführung auf dem Tablet mit eingeloggtem Account unter „Meine Tests“, „vorbereitet“ finden."
-
-  utter_question/starter_access_costs:
-  - text: "Nein. Das Starter-Abo in der testbox ist komplett unverbindlich und bietet die Möglichkeit viele Testverfahren und Funktionen der testbox auszuprobieren. Sie haben die Möglichkeit 5 kostenfreie Durchführungen pro Monat zu nutzen und so die Anwendung kennenzulernen."
-
-  utter_question/prepared_test:
-  - text: "Wenn Sie „später durchführen“ wählen wird der Test dem Klienten/ der Klientin zugewiesen und Sie können diesen unter „Meine Tests“, „vorbereitet“ starten oder in der Klientenliste bei dem entsprechenden Klienten/der Klientin unter „vorbereitet“ finden."
-
-  utter_question/test_battery_coin:
-  - text: "Für die Durchführung einer Batterie werden immer so viele Testcoins abgezogen, wie die Anzahl der beinhalteten Tests ist."
-
-  utter_question/create_test_battery:
-  - text: "Anbei finden Sie hierzu eine Videoanleitung: https://youtu.be/Ipp4WLntbIc "
-
-  utter_question/test_start:
-  - text: "Anbei finden Sie hierzu eine Videoanleitung: https://youtu.be/ZpXS3nSCWuM"
-
-  utter_question/test_request:
-  - text: "Sie können Testanfragen über die testbox direkt oder über tests@testbox.de stellen. Anbei finden Sie hierzu auch eine Videoanleitung: https://youtu.be/zlRRu4fzrGU"
-
-  utter_question/hogrefe:
-  - text: "Derzeit bieten wir keine Verfahren vom Hogrefe Verlag an. Schauen Sie gerne im Testkatalog oder sprechen Sie uns an, wenn Sie geeignete Alternativen zu Ihnen bekannten Verfahren suchen."
-
-  utter_question/licensed_procedure_cost:
-  - text: "Die Lizenzgebühren lizenzierter Verfahren werden zusätzlich erhoben und an die Lizenzinhaber weitergegeben."
-#
-#  utter_new_question/test_evaluation_cost:
-#  - text: "Nein bei uns ist die Auswertung eines Tests immer mit dabei und beeinflusst nicht die Kosten."
-#
-#  utter_new_question/map_test_question:
-#  - text: "Senden Sie uns gerne eine Anfrage hierzu an tests@testbox.de und wir prüfen die Digitalisierungsmöglichkeiten und den Umfang Ihres Fragebogens, sodass wir Ihnen ein individuelles Angebot stellen können. Sie können das Verfahren auch für die gesamte testbox freigeben, wenn Sie es veröffentlichen möchten und es den Anforderungen entspricht."
-#
-#  utter_new_question/subscription_options:
-#  - text: "bei der testbox wählen Sie das für Sie passendste Abo-Modell. Dabei wählen Sie aus, wie viele Durchführungen Sie benötigen und welche Funktionen Ihnen wichtig sind. So haben Sie die laufenden Kosten immer im Blick und zahlen dann nur noch die ggf. anfallenden Lizenzgebühren der lizenzierten Verfahren.
-#-	Wir unterscheiden zwischen einem kostenfreien Startermodell, bei dem Sie 5 Durchführungen pro Monat starten und auswerten können, 2 festen Optionen für kleinere und größere Praxen, sowie einer kompletten Individuallösung, die Sie gemeinsam mit uns abstimmen können.
-#-	Im Basic Abo sind monatlich 50 Testdurchführungen beinahltet und im Professional-Abo 100.
-#-	Das Ganze, inkl. der Preise, finden Sie hier auch noch auf unserer Webseite."
-#
-#  utter_new_question/professional_subscription:
-#  - text: "Das Professionell-Abo kostet im Jahresvertrag monatlich 85 € und in einem monatlich kündbaren Tarif 90€"
-#  utter_new_question/basic_subscription:
-#  - text: "Das Basic-Abo kostet in einem Jahresvertrag 45€ pro Monat und in einem monatlich künbaren Tarif 50€ pro Monat."
-#  utter_new_question/enterprise_subscription:
-#  - text: "Das Enterprise Abo ist für große Praxen und Kliniken gedacht, welche eine Individuelle Lösung und mehr als 100 Testdurchführungen pro Monat benötigen."
-#
-#  utter_new_question/language_procedure:
-#  - text: "Derzeit gibt es auf der testbox hauptsächlich Verfahren in der deutschen Sprache und einige englischsprachige Verfahren. Wenn Sie einen speziellen Wunsch haben stellen Sie gerne eine Testanfrage über tests@testbox.de und wir prüfen Ihr Anliegen. Gerne senden wir dem Autor/ der Autorin eine Anfrage zur Digitalisierung."
-#
-#  utter_new_question/test_digitized:
-#  - text: "Schreiben Sie uns gerne eine Nachricht an tests@testbox.de wir erklären Ihnen gerne alles weitere. Zunächst bekommen Sie von uns einen Fragebogen indem Sie alle nötigen Angaben zu Ihrem Verfahren und Ihren Lizenzwünschen angeben können und wir prüfen die Digitalisierungsmöglichkeit."
-#
-#  utter_new_question/test_publish:
-#  - text: "Wir legen höchsten Wert auf Datenschutz und wahren das Urheberrecht und Lizenzrecht der Autoren, deren Verfahren wir auf unserer Plattform abbilden dürfen mit höchster Priorität. Sie können mit uns gemeinsam Evaluieren was für Sie die beste Option ist."
-#
-  utter_new_question/clients:
-  - text: "Klicken Sie auf den erhaltenen Link oder kopieren Sie diesen und fügen Sie ihn in Ihrem Browserfenster ein. Wenn Sie einen QR-Code oder Lizenzschlüssel erhalten haben sehen Sie auf der testbox.de Startseite den Button „Testschlüssel“. Hier können Sie den Code einscannen oder eingeben. Eine Anmeldung ist für die Durchführung nicht nötig."
-
+# faq response if answer is not available in action_faq
+  utter_faq:
+  - text: "Leider konnte ich keine Antwort auf Ihre Frage finden. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de."
 
 #test catalog
   utter_test_catalog_menu:
@@ -251,7 +195,7 @@ responses:
       - title: "Andere Frage"
         payload: /ask_question
       - title: "Zurückgehen"
-        payload: /therapist
+        payload: /therapist_menu
 
   utter_test_catalog:
   - text: "Bitte Schriben die Test name"
@@ -288,6 +232,7 @@ actions:
   - action_test_search_age
   - action_test_search_disorder
   - action_faq
+  - utter_faq
 
 session_config:
   session_expiration_time: 60

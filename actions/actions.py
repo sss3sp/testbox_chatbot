@@ -361,7 +361,7 @@ class ActionQuestionsHelp(Action):
 
         print(f"Full intent: {full_intent}")  # Debugging print
         if full_intent:
-            # Extract topic (sub-intent) after 'question/' (assuming intent format is 'question/topic')
+            # Extract topic (sub-intent) after 'faq/' (assuming intent format is 'faq/topic')
             topic = full_intent.split("/")[1] if "/" in full_intent else None
         else:
             topic = None
@@ -402,14 +402,9 @@ class ActionQuestionsHelp(Action):
                     response_text = matched_article.get('text')
                     dispatcher.utter_message(text=response_text)
 
-                elif matched_article is None:
-                    # If no matched article is found, use the fallback utterance from the domain file
-                    print(f"No match found, Answer from utter_question/{topic}")  # Debug print
-                    dispatcher.utter_message(response=f"utter_question/{topic}")
-
                 else:
-                    dispatcher.utter_message(
-                        text="Leider konnte ich keine Antwort auf Ihre Frage finden. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de.")
+                    # If no matched article is found, use the fallback utterance from the domain file
+                    dispatcher.utter_message(text="utter_faq")
 
             except Exception as e:
                 print(f"Error loading Google Sheet: {str(e)}")
@@ -418,6 +413,7 @@ class ActionQuestionsHelp(Action):
 
 
         else:
+            #cannot predict user input with faq intent
             dispatcher.utter_message(
                 text="Leider konnte ich die Intent Ihrer Anfrage nicht erkennen. Sie können diese Seite für weitere Informationen besuchen https://testbox.de/help. Wenn Sie dort keine passende Antwort finden, senden Sie uns bitte eine Anfrage mit Ihrer Frage an tests@testbox.de")
 
@@ -472,7 +468,7 @@ class ActionQuestionsHelp(Action):
         # Search for the intent and its examples
         intent_examples = []
         for intent in nlu_data['nlu']:
-            if intent['intent'] == f"question/{topic}":  # Assuming intents are in this format
+            if intent['intent'] == f"faq/{topic}":  # Assuming intents are in this format
                 examples = intent.get('examples', "").strip().split("\n")
                 intent_examples = [ex.strip('- ') for ex in examples]  # Clean up examples
                 break

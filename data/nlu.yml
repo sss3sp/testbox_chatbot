@@ -17,7 +17,7 @@ nlu:
     - guten morgen
 
 #First option to user
-- intent: clinet_therapist
+- intent: client_therapist
   examples: |
     - I am a client
     - I am a therapist
@@ -27,61 +27,53 @@ nlu:
   examples: |
     - Ich habe eine Frage
     - Ich möchte etwas wissen
+    - Hallo, ich habe eine Frage
+    - Guten tag, ich habe eine Frage
+
+#client Menu
+- intent: client_menu
+  examples: |
+    - Hallo, Ich bin ein Patient
+    - Ich bin kein Therapeut
 
 #Therapist Menu
-- intent: therapist
+- intent: therapist_menu
   examples: |
     - Hallo, ich bin ein Therapeut
     - Ich bin ein Therapeut
     - Ich arbeite als Therapeut
+    
 
 #Therapist Menu Options
-- intent: konto_abonnements
+- intent: konto_abonnements_menu
   examples: |
     - Ich habe ein Problem mit meinem Konto
     - Ich möchte mein Konto aktualisieren
-
-- intent: question_credit_use
-  examples: |
-    - Kann ich ein bestehendes Guthaben verwenden, wenn ich mein Konto erweitere?
-    - Wie kann ich mein bisheriges Kreditkartenguthaben nutzen, wenn ich mein Konto erweitere?
-
+##
 - intent: test_battery_menu
   examples: |
     - Ich möchte etwas über die Testbatterie erfahren
     - Wie kann ich eine Testbatterie erstellen?
-
-- intent: test_battery_def
+##
+- intent: test_procedure_menu
   examples: |
-    - Was ist eine Testbatterie?
-    - Wie definiert man den Begriff "Testbatterie"?
-    - Was umfasst eine Testbatterie?
-    - Welche Funktion hat eine Testbatterie?
+    - Ich möchte mich über Testverfahren informieren
+    - Was sind die Testverfahren?
+    
 
-- intent: test_battery_usage
-  examples: |
-    - Kann ich die Testbatterie für bezahlte Tests verwenden?
-    - Kann ich eine Testbatterie verwenden?
+## see the below sections for test catalog
 
 
 #Feedback after every questions
 - intent: feedback
   examples: |
-    - Hat es geholfen?
-    - Hat das geholfen?
-
-- intent: feedback_therapist
-  examples: |
-    - Hat der Therapeutenbereich geholfen?
-    - Hat der Therapeutenabschnitt geholfen?
+    - Vielen Dank für Ihre Hilfe
+    - Danke für die Antwort
 
 - intent: feedback_yes
   examples: |
     - Das ist richtig
     - richtig sagen
-
-- intent: feedback_yes_therapist
-  examples: |
     - Das ist korrekt
     - Sie sind korrekt
 
@@ -116,6 +108,8 @@ nlu:
     - Dankeschon
     - Gerne
     - Danke ihnen
+    - Nein, das war's
+    - Ich habe keine Fragen mehr
 
 - intent: goodbye
   examples: |
@@ -131,7 +125,8 @@ nlu:
   
 
   #Questions from Help Page
-- intent: question/test_assignment_remote_device
+  ##01-What happens after assigning a test “On a remote device”?
+- intent: faq/auf_einem_entfernten_gerät
   examples: |
     - Was passiert nach der Zuweisung eines Tests “Auf einem entfernten Gerät”?
     - Was passiert, wenn ich einen Test auf ein entferntes Gerät zuweise?
@@ -139,15 +134,31 @@ nlu:
     - Wie geht es weiter, wenn ein Test auf ein anderes Gerät zugewiesen wird?
     - Was sind die nächsten Schritte nach der Zuweisung eines Tests auf ein entferntes Gerät?
 
-- intent: question/def_test_assignment_remote_device
+##02-What is meant by 'on a remote device' when assigning a test?
+- intent: faq/def_auf_einem_entfernten_gerät
   examples: | 
     - Was versteht man unter 'auf einem entfernten Gerät' bei der Testzuweisung?
-    - Kannst du erklären, was 'auf einem entfernten Gerät' bei der Testzuweisung bedeutet?
-    - Was bedeutet der Begriff 'auf einem entfernten Gerät' im Kontext der Testzuweisung?
+    - Kannst du erklären, was auf einem entfernten Gerät bei der Testzuweisung bedeutet?
+    - Was bedeutet der Begriff auf einem entfernten Gerät im Kontext der Testzuweisung?
     - Was heißt 'auf einem entfernten Gerät' bei der Zuweisung von Tests?
     - Wie wird 'auf einem entfernten Gerät' bei der Testzuweisung definiert?
 
-- intent: question/add_employee_slots
+##03-Where can I find a prepared test? | What happens when I click on Perform later?
+- intent: faq/vorbereiteten_test_später_durchführen_klicke
+  examples: | 
+    - Wo finde ich einen vorbereiteten Test?
+    - Wo kann ich einen vorbereiteten Test finden?
+    - Wo sind die vorbereiteten Tests?
+    - Wo kann ich einen bereits vorbereiteten Test abrufen?
+    - Wo kann ich die vorbereiteten Tests finden?
+    - Was passiert, wenn ich auf später durchführen klicke?
+    - Was geschieht, wenn ich auf "später durchführen" drücke?
+    - Was passiert, wenn ich "später durchführen" auswähle?
+    - Was passiert nach dem Klicken auf später durchführen?
+    - Was passiert, wenn ich die Option "später durchführen" anklicke?
+
+##04-How can I add more staff positions to my practice?
+- intent: faq/Mitarbeiterplätze_hinzufügen
   examples: |
     - Wie kann ich meiner Praxis weitere Mitarbeiterplätze hinzufügen?
     - Wie füge ich mehr Mitarbeiterplätze zu meiner Praxis hinzu?
@@ -157,7 +168,8 @@ nlu:
     - Warum ist in meinem Starter-Abo nur ein Mitarbeiterplatz enthalten?
     - Muss ich ein Upgrade machen, um mehr Mitarbeiterplätze zu bekommen?
 
-- intent: question/export_test_results
+##05-How can I export the test results?
+- intent: faq/Testergebnisse_exportieren
   examples: |
     - Wie kann ich die Testergebnisse exportieren?
     - Welche Schritte sind nötig, um Testergebnisse zu exportieren?
@@ -165,7 +177,8 @@ nlu:
     - Ist es möglich, Testergebnisse zu exportieren?
     - Kann ich die Testergebnisse exportieren?
 
-- intent: question/starter_access_costs
+##06-Are there any costs for the starter subscription?
+- intent: faq/Starter_Abo_Kosten
   examples: |
     - Können beim Starter-Abo Kosten entstehen?
     - Entstehen Kosten, wenn ich das Starter-Abo nutze?
@@ -173,7 +186,8 @@ nlu:
     - Wird das Starter-Abo etwas kosten?
     - Kostet das Starter-Abo etwas?
 
-- intent: question/supported_devices
+##07-On which end devices can tests be carried out?
+- intent: faq/Endgeräten_durchgeführt_werden
   examples: |
     - Auf welchen Endgeräten können Tests durchgeführt werden?
     - Welche Endgeräte unterstützen die Durchführung von Tests?
@@ -181,7 +195,8 @@ nlu:
     - Welche Geräte sind für die Testdurchführung geeignet?
     - Gibt es bestimmte Endgeräte, auf denen Tests durchgeführt werden können?
 
-- intent: question/find_avv
+##08-Where can I find the AVV (order processing agreement)?
+- intent: faq/finde_avv
   examples: |
     - Wo finde ich die AVV (Auftragsverarbeitungsvereinbarung)?
     - Wo kann ich die Auftragsverarbeitungsvereinbarung einsehen?
@@ -189,7 +204,8 @@ nlu:
     - Wo ist die AVV zu finden?
     - Kann ich die AVV irgendwo einsehen?
 
-- intent: question/mark_tests_favorite
+##09-Can I mark frequently used tests as favorites?
+- intent: faq/Tests_Favorit_markieren
   examples: |
     - Kann ich häufig verwendete Tests als Favorit markieren?
     - Wie kann ich Tests als Favorit markieren?
@@ -197,7 +213,8 @@ nlu:
     - Kann ich meine bevorzugten Tests als Favorit kennzeichnen?
     - Gibt es eine Option, Tests als Favorit zu markieren?
 
-- intent: question/guideline_testing
+##10-Does the testbox support testing according to guidelines?
+- intent: faq/Leitlinie_testen
   examples: |
     - Unterstützt die testbox das Testen nach Leitlinie?
     - Kann ich mit der testbox nach Leitlinie testen?
@@ -205,16 +222,22 @@ nlu:
     - Ist das Testen nach Leitlinie in der testbox möglich?
     - Erlaubt die testbox das Testen gemäß Leitlinie?
 
-- intent: question/delete_prepared_tests
+##11-How can I delete tests that I have marked for preparation in the “My tests” section?
+- intent: faq/Rubrik_Meine_Tests_löschen
   examples: |
     - Wie kann ich Tests, die ich zur Vorbereitung gekennzeichnet habe unter der Rubrik "Meine Tests" wieder löschen?
     - Kann ich vorbereitete Tests in der Rubrik "Meine Tests" löschen?
     - Wie lösche ich Tests aus der Rubrik "Meine Tests"?
     - Ist es möglich, vorbereitete Tests aus "Meine Tests" zu entfernen?
     - Wie entferne ich gekennzeichnete Tests aus "Meine Tests"?
-    - Kann ich einen nicht gestarteten Test zurückerstatten? 
+    - Kann ich einen nicht gestarteten Test zurückerstatten?
+    - Kann ich den Test erstatten lassen, wenn ich ihn nicht gestartet habe?
+    - Ist eine Rückerstattung möglich, wenn ich den Test nicht begonnen habe?
+    - Bekomme ich mein Geld zurück, wenn ich den Test nicht gemacht habe?
+    - Kann ich eine Rückerstattung beantragen, wenn ich den Test nicht gestartet habe?
 
-- intent: question/data_security
+##12-How are data protection and data security guaranteed on the testbox?
+- intent: faq/Datensicherheit
   examples: |
     - Wie werden Datenschutz und Datensicherheit auf der testbox gewährleistet?
     - Welche Maßnahmen gibt es für Datenschutz und Datensicherheit in der testbox?
@@ -222,15 +245,17 @@ nlu:
     - Wie wird der Datenschutz in der testbox sichergestellt?
     - Was tut die testbox für den Schutz meiner Daten?     
 
-- intent: question/test_execution_clients_device
+##13-How does the test work on the client's device?
+- intent: faq/Testdurchführung_auf_Geräten_Klient
   examples: |
     - Wie funktioniert die Testdurchführung auf den Geräten der Klient/-innen?
-    - Wie werden Tests auf den Geräten der Klient/-innen durchgeführt?
-    - Kann ich Tests auf den Geräten meiner Klient/-innen durchführen?
-    - Wie laufen Tests auf Klient/-innen Geräten ab?
-    - Was muss ich tun, um Tests auf den Geräten meiner Klient/-innen durchzuführen?
+    - Wie werden Tests auf den Geräten der Klientinnen durchgeführt?
+    - Kann ich Tests auf den Geräten meiner Klient durchführen?
+    - Wie laufen Tests auf Klientinnen Geräten ab?
+    - Was muss ich tun, um Tests auf den Geräten meiner Klient durchzuführen?
 
-- intent: question/referral_bonus
+##14-How does the referral bonus work?
+- intent: faq/Empfehlungsbonus
   examples: |
     - Wie funktioniert der Empfehlungsbonus?
     - Was muss ich tun, um den Empfehlungsbonus zu erhalten?
@@ -238,7 +263,9 @@ nlu:
     - Welche Bedingungen gibt es für den Empfehlungsbonus?
     - Kann ich einen Empfehlungsbonus bekommen?
 
-- intent: question/recharge_practice_balance
+
+##15-How can I top up my practice credit?
+- intent: faq/Praxis_Guthaben_aufladen
   examples: |
     - Wie kann ich mein Praxis-Guthaben aufladen?
     - Was muss ich tun, um mein Praxis-Guthaben aufzuladen?
@@ -246,56 +273,107 @@ nlu:
     - Wie lade ich das Guthaben meiner Praxis auf?
     - Kann ich das Praxis-Guthaben aufladen?
 
-- intent: question/billing_psychological_tests
+
+##16-Abrechnung psychologischer Testverfahren
+- intent: faq/Abrechnung_psychologischer_Testverfahren
   examples: |
     - Abrechnung psychologischer Testverfahren
     - Wie funktioniert die Abrechnung psychologischer Testverfahren?
     - Was muss ich bei der Abrechnung psychologischer Testverfahren beachten?
     - Welche Regeln gelten für die Abrechnung psychologischer Testverfahren?
     - Wie werden psychologische Testverfahren abgerechnet?
+    - Welche Regelungen gelten für die Abrechnung von psychologischen Tests?
+    - Wie läuft die Abrechnung von psychologischen Testverfahren ab?
+    - Welche Vorschriften gibt es für die Abrechnung psychologischer Testverfahren?
+    - Was muss ich bei der Verrechnung von psychologischen Testverfahren beachten?
+    - Wie viel kann man für psychologische Testverfahren in Rechnung stellen?
+    - Was kostet die Abrechnung für psychologische Tests?
+    - Welche Gebühren kann man für psychologische Testverfahren berechnen?
+    - Gibt es eine Obergrenze für die Abrechnung von Testverfahren?
+    - Wie hoch sind die Kosten für psychologische Tests?
+    - Kann man für psychologische Tests eine Pauschale in Rechnung stellen?
+    - Wie viel kann ich für psychologische Testverfahren abrechnen?
 
-- intent: question/prepared_test
+##17-Can you please give me some examples how billings are calculated for tests?
+- intent: faq/Abrechnung_Beispiele
   examples: |
-    - Wo finde ich einen vorbereiteten Test?
-    - Wo gibt es einen vorgefertigten Test?
-    - Wo finde ich einen Test, der bereits vorbereitet ist?
-    - Wo kann ich einen bereits erstellten Test finden?
-    - Wo bekomme ich einen fertig erstellten Test?
-    - Was passiert wenn ich auf „später durchführen“ klicke?
-    - Welche Folgen hat es, wenn ich auf „später durchführen“ klicke?
-    - Was genau passiert nach dem Klicken auf „später durchführen“?
-    - Was bedeutet es, wenn ich „später durchführen“ drücke?
-    - Was passiert, wenn ich die Option „später durchführen“ auswähle?
+    - Können Sie mir bitte einige Beispiele nennen, wie die Abrechnung von Tests erfolgt?
+    - Haben Sie Beispiele zur Abrechnung von psychologischen Tests?
+    - Wie läuft die Abrechnung für Testverfahren ab, haben Sie Beispiele?
+    - Können Sie mir zeigen, wie die Abrechnung von Tests funktioniert?
+    - Haben Sie Beispielrechnungen für psychologische Tests?
+    - Können Sie Beispiele für die Abrechnung von Tests geben?
+    - Wie genau werden psychologische Tests abgerechnet, haben Sie Beispiele?
 
-- intent: question/test_battery_coin
+##18-Testbatterie
+- intent: faq/Testbatterie
+  examples: |
+    - Was ist eine Testbatterie?
+    - Was bedeutet eine Testbatterie?
+    - Können Sie erklären, was eine Testbatterie ist?
+    - Was versteht man unter einer Testbatterie?
+    - Was umfasst eine Testbatterie?
+    - Wie definiert man eine Testbatterie?
+
+##19-Can I use the test battery for paid tests?
+- intent: faq/Testbatterie_für_bezahlte_Tests
+  examples: |
+    - Kann ich die Testbatterie für bezahlte Tests verwenden?
+    - Darf ich die Testbatterie für kostenpflichtige Tests nutzen?
+    - Ist es möglich, die Testbatterie für bezahlte Tests zu verwenden?
+    - Kann die Testbatterie auch für bezahlte Tests eingesetzt werden?
+    - Wird die Testbatterie für kostenpflichtige Tests akzeptiert?
+    - Kann ich die Testbatterie für kommerzielle Tests einsetzen?
+    - Ist es erlaubt, die Testbatterie für kostenpflichtige Tests zu benutzen?
+
+##20-How many test coins are used for a battery?
+- intent: faq/Testcoins_für_Batterie
   examples: |
     - Wie viele Testcoins werden für eine Batterie verwendet?
-    - Wie viele Testcoins benötigt man, um eine Batterie zu testen?
-    - Wie viele Testcoins braucht man pro Batterie?
-    - Wie viele Testcoins werden pro Batterie verwendet?
-    - Wie viele Testcoins werden für den Test einer Batterie benötigt?
+    - Wieviele Testcoins braucht man für eine Batterie?
+    - Wie viele Testcoins benötigt eine Batterie?
+    - Wie viele Testcoins muss ich für eine Batterie einsetzen?
+    - Wie viele Testcoins sind für eine Batterie erforderlich?
+    - Was kostet eine Batterie in Testcoins?
     - Wie viele Testcoins sind nötig, um eine Batterie zu testen?
-  
+    
 
-- intent: question/create_test_battery
+##21-How do I create a test battery?
+- intent: faq/Testbatterie_erstellen
   examples: |
     - Wie erstelle ich eine Testbatterie?
-    - Können Sie mir erklären, wie man eine Testbatterie aufbaut?
+    - Kannst du mir sagen, wie ich eine Testbatterie zusammenstelle?
+    - Wie gehe ich vor, um eine Testbatterie zu erstellen?
+    - Was sind die Schritte zur Erstellung einer Testbatterie?
+    - Wie wird eine Testbatterie aufgebaut?
+    - Wie kann ich eine Testbatterie zusammenstellen?
+    - Was muss ich tun, um eine Testbatterie zu entwickeln?
     - Wie gehe ich vor, um eine Testbatterie für psychologische Tests zu erstellen?
     - Welche Schritte sind nötig, um eine Testbatterie zu entwickeln?
     - Wie gehe ich vor, um eine Testbatterie für psychologische Tests zu erstellen?
 
-- intent: question/test_start
+##22-Can I use an existing credit balance if I extend my account?
+- intent: faq/bestehendes_Guthaben_verwenden
+  examples: |
+    - Kann ich ein bestehendes Guthaben verwenden, wenn ich mein Konto erweitere?
+    - Ist es möglich, mein Guthaben zu nutzen, wenn ich mein Konto erweitere?
+    - Kann ich mein vorhandenes Guthaben einsetzen, um mein Konto zu erweitern?
+    - Kann ich mein bestehendes Guthaben bei der Erweiterung meines Kontos verwenden?
+    - Wird mein aktuelles Guthaben bei einer Kontoerweiterung berücksichtigt?
+    - Kann ich Guthaben von meinem aktuellen Konto verwenden, wenn ich es erweitere?
+    - Kann ich mein vorhandenes Guthaben bei einer Kontoerweiterung einsetzen?
+
+##23-How can I start a test?
+- intent: faq/test_starten
   examples: |
     - Wie kann ich einen Test starten?
     - Wie kann ich einen Test beginnen?
-    - Wie kann ich einen Test durchführen?
     - Wie starte ich einen Test?
     - Wie fange ich mit einem Test an?
     - Was muss ich tun, um einen Test zu starten?
 
-
-- intent: question/test_request
+##24-How can I request a test? | What do I do if a test is not yet available?
+- intent: faq/test_anfragen
   examples: |
     - Wie kann ich einen Test anfragen?
     - Können Sie mir erklären, wie ich einen Test anfordern kann?
@@ -310,7 +388,8 @@ nlu:
     - Was kann ich tun, wenn der Test noch nicht erstellt wurde?
     - Welche Schritte sollte ich unternehmen, wenn es den Test noch nicht gibt?
 
-- intent: question/hogrefe
+##25-Do you have procedures from Hogrefe?
+- intent: faq/hogrefe
   examples: |
     - Habt ihr auf Verfahren von Hogrefe?
     - Gibt es bei euch Tests von Hogrefe?
@@ -319,7 +398,8 @@ nlu:
     - Verfügt ihr über Testverfahren von Hogrefe?
     - Kann man bei euch Hogrefe-Verfahren erhalten?
 
-- intent: question/licensed_procedure_cost
+##26-Does a licensed procedure cost extra or is it included in my subscription?
+- intent: faq/Kostet_lizenziertes_Verfahren
   examples: |
     - Kostet ein lizenziertes Verfahren extra oder ist das in meinem Abo beinhaltet?
     - Ist ein lizenziertes Verfahren im Preis meines Abos enthalten oder fallen zusätzliche Kosten an?
@@ -327,48 +407,121 @@ nlu:
     - Gehört das lizenzierte Verfahren zu meinem Abo, oder kostet das extra?
     - Sind die lizenzierten Verfahren im Abonnement enthalten, oder gibt es dafür Zusatzkosten?
     - Fallen für ein lizenziertes Verfahren zusätzliche Gebühren an, oder ist es in meinem Abo enthalten?
+    
+##27-Does the evaluation of a test cost extra?
+- intent: faq/Kostet_Auswertung_Tests
+  examples: |
+    - Kostet die Auswertung eines Tests extra?
+    - Wird die Auswertung des Tests zusätzlich berechnet?
+    - Muss ich für die Auswertung extra bezahlen?
+    - Fällt für die Testauswertung ein zusätzlicher Betrag an?
+    - Ist die Auswertung des Tests im Preis inbegriffen?
+    - Gibt es zusätzliche Kosten für die Auswertung des Tests?
+    - Wird die Testauswertung separat abgerechnet?
 
-#- intent: new_question/test_evaluation_cost
-#  examples: |
-#    - Kostet die Auswertung eines Tests extra?
-#
-#- intent: new_question/map_test_question
-#  examples: |
-#    - Können wir unsere eigenen Fragebögen/Tests auf der testbox abbilden?
-#
-#- intent: new_question/subscription_options
-#  examples: |
-#    - Was gibt es für Abo-Möglichjkeiten auf der testbox?
-#
-#- intent: new_question/professional_subscription
-#  examples: |
-#    - Was kostet das Professionell Abo?
-#- intent: new_question/basic_subscription
-#  examples: |
-#    - Was kostet das Basic-Abo?
-#- intent: new_question/enterprise_subscription
-#  examples: |
-#    - Was ist ein Enterprise Abo?
-#
-#- intent: new_question/language_procedure
-#  examples: |
-#    - Haben sie auch verfahren auf *Sprache*?
-#
-#- intent: new_question/test_digitized
-#  examples: |
-#    - Ich bin ein Autor wie kann mein Verfahren auf der testbox landen?
-#    - Wie kann ich meinen Test digitalisieren lassen?
-#    - Kann ich mein Testverfahren digitalisieren lassen?
-#
-#- intent: new_question/test_publish
-#  examples: |
-#    - Wird mein Verfahren ohne meine Zustimmung veröffentlicht?
 
-- intent: new_question/clients
+##28-Can we map our own questionnaires/tests on the testbox?
+- intent: faq/Fragebögen_Tests_integrieren
+  examples: |
+    - Können wir unsere eigenen Fragebögen/Tests in die Testbox integrieren?
+    - Ist es möglich, unsere eigenen Tests in die Testbox zu übertragen?
+    - Können wir unsere eigenen Umfragen in der Testbox abbilden?
+    - Ist es erlaubt, eigene Fragebögen in die Testbox zu importieren?
+    - Können wir benutzerdefinierte Tests in der Testbox verwenden?
+    - Besteht die Möglichkeit, eigene Tests in der Testbox zu konfigurieren?
+    - Wie können wir unsere eigenen Fragebögen in die Testbox einfügen?
+
+##29-What subscription options are available on the testbox?
+- intent: faq/abo_moglichkeiten
+  examples: |
+    - Was gibt es für Abo-Möglichkeiten auf der testbox?
+    - Welche Abonnements sind auf der testbox verfügbar?
+    - Welche Abo-Optionen gibt es auf der testbox?
+    - Welche Arten von Abos kann ich auf der testbox abschließen?
+    - Kannst du mir die Abo-Möglichkeiten auf der testbox nennen?
+    - Welche verschiedenen Abo-Modelle bietet die testbox an?
+    - Welche Abo-Pläne gibt es bei der testbox?
+
+##30-How much does the Professionell subscription cost?
+- intent: faq/kostet_Professionell_Abo
+  examples: |
+    - Was kostet das Professionell Abo?
+    - Wie hoch ist der Preis für das Professionell Abo?
+    - Was sind die Kosten für das Professionell Abo?
+    - Wie viel muss ich für das Professionell Abo bezahlen?
+    - Können Sie mir den Preis des Professionell Abos nennen?
+    - Was verlangt ihr für das Professionell Abo?
+    - Wie teuer ist das Professionell Abo?
+
+##31-What does the Basic subscription cost?
+- intent: faq/kostet_basic_Abo
+  examples: |
+    - Was kostet das Basic-Abo?
+    - Wie viel kostet das Basic-Abo?
+    - Was sind die Kosten für das Basic-Abo?
+    - Kannst du mir den Preis für das Basic-Abo sagen?
+    - Was muss ich für das Basic-Abo zahlen?
+    - Welche Gebühren fallen beim Basic-Abo an?
+    - Was ist der Preis für das Basic-Abo?
+
+##32-What is an Enterprise subscription?
+- intent: faq/kostet_enterprise_Abo
+  examples: |
+    - Was ist ein Enterprise Abo?
+    - Was umfasst das Enterprise Abo?
+    - Was sind die Vorteile eines Enterprise Abos?
+    - Kannst du mir mehr über das Enterprise Abo erzählen?
+    - Welche Funktionen bietet das Enterprise Abo?
+    - Wie unterscheidet sich das Enterprise Abo von anderen Abos?
+
+##33-Do you also have procedures on *language*?
+- intent: faq/fragen_verfahren_sprache
+  examples: |
+    - Haben sie auch verfahren auf Englisch?
+    - Haben sie auch verfahren auf Deutsch?
+    - Gibt es verfahren in Französisch?
+    - Bieten Sie verfahren auf Spanisch an?
+    - Haben Sie auch Verfahren in Italienisch?
+    - Gibt es auch Verfahren auf Niederländisch?
+    - Sind verfahren auf Russisch verfügbar?
+
+##34-How can I have my test digitized?
+- intent: faq/Test_digitalisieren
+  examples: |
+    - Ich bin Autor. Wie kann ich mein Verfahren auf der Testbox veröffentlichen?
+    - Wie kann ich meinen Test digitalisieren lassen?
+    - Kann ich mein Testverfahren digitalisieren lassen?
+    - Welche Schritte sind nötig, um meinen Test digital zu machen?
+    - Was muss ich tun, um mein Testverfahren digitalisieren zu können?
+    - Gibt es eine Möglichkeit, mein Testverfahren online verfügbar zu machen?
+    - Ich möchte mein Testverfahren digitalisieren. Wo fange ich an?
+    - Wie bringe ich meinen Test auf die digitale Plattform?
+
+##35-Will my procedure be published without my consent?
+- intent: faq/fragen_verfahren_veroeffentlichung
+  examples: |
+    - Wird mein Verfahren ohne meine Zustimmung veröffentlicht?
+    - Kann mein Fall ohne meine Erlaubnis veröffentlicht werden?
+    - Darf mein Verfahren veröffentlicht werden, wenn ich nicht zustimme?
+    - Wird mein Fall auch ohne mein Einverständnis an die Öffentlichkeit gegeben?
+    - Ist es möglich, dass mein Verfahren ohne meine Zustimmung veröffentlicht wird?
+    - Wer entscheidet, ob mein Verfahren veröffentlicht wird, ohne dass ich zustimme?
+    - Welche Maßnahmen gibt es, um die Veröffentlichung meines Verfahrens ohne meine Zustimmung zu verhindern?
+
+##36-How can I take the test?
+- intent: faq/test_durchfuehren
   examples: |
     - Wie kann ich den Test durchführen?
     - Wie komme ich zu dem Test?
-    - Mein Therapeut hat mir gesagt ich soll hier einen Test durchführen
+    - Mein Therapeut hat mir gesagt, ich soll hier einen Test durchführen
+    - Wo finde ich den Test, den ich machen soll?
+    - Wie kann ich den Test durchführen?
+    - Kann mir jemand zeigen, wie ich den Test starte?
+    - Gibt es eine Anleitung, wie ich den Test durchführen kann?
+    - Ich möchte den Test machen, was muss ich tun?
+    - Wie starte ich den Test, den ich bereits erhalten habe?
+    - Ich habe einen Test zugewiesen bekommen, wie kann ich ihn beginnen?
+    - Was ist der nächste Schritt, um den Test zu machen?
 
 ### Test Catalog ******************************************************************************************************
 - intent: test_catalog_menu
@@ -813,6 +966,8 @@ nlu:
     - [Schüttellähmung](disorder)
     - [Morbus Parkinson](disorder)
 
+
+ 
 
 
 
