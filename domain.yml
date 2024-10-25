@@ -72,8 +72,10 @@ responses:
     buttons:
       - title: "Wie kann ich den Test durchführen?"
         payload: "Wie komme ich zu dem Test?"
-      - title: "Test Catalog"
-        payload: /test_catalog_menu
+      - title: "Suchtests für Zielgruppen"
+        payload: /test_search_age_menu
+      - title: "Tests für eine Störung"
+        payload: /test_search_disorder
       - title: "Andere Frage"
         payload: /ask_question
 
