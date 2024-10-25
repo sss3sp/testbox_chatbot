@@ -23,7 +23,7 @@ pipeline:
      min_ngram: 1
      max_ngram: 4
    - name: DIETClassifier
-     epochs: 50
+     epochs: 100
      num_transformer_layers: 4
      transformer_size: 256
      use_masked_language_model: True
@@ -36,10 +36,10 @@ pipeline:
    - name: LexicalSyntacticFeaturizer
    - name: RegexFeaturizer
    - name: ResponseSelector
-     epochs: 50
+     epochs: 100
      constrain_similarities: true
    - name: FallbackClassifier
-     threshold: 0.8
+     threshold: 0.7
      ambiguity_threshold: 0.1
 
 # Configuration for Rasa Core.
@@ -55,8 +55,8 @@ policies:
      fallback_action_name: "action_default_fallback"
    - name: UnexpecTEDIntentPolicy
      max_history: 8
-     epochs: 50
+     epochs: 100
    - name: TEDPolicy
      max_history: 8
-     epochs: 50
+     epochs: 100
      constrain_similarities: true

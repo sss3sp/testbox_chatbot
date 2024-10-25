@@ -159,7 +159,7 @@ responses:
 
 
   utter_feedback_no:
-  - text: "Tut mir leid, ich konnte Ihnen nicht helfen. Benötigen Sie Hilfe von unserem Kundendienstmitarbeiter?"
+  - text: "Tut mir leid, ich konnte Ihnen nicht helfen. Sie können uns unter tests@testbox.de schreiben oder Benötigen Sie Hilfe von unserem Kundendienst? "
     buttons:
       - title: "Ja"
         payload: /fallback_human
@@ -205,19 +205,19 @@ responses:
   - text: "Bitte wählen Sie die Zielgruppe:"
     buttons:
       - title: "Senioren"
-        payload: '/test_search_age {"age_group": "elders"}'
+        payload: "elders"
       - title: "Jugendliche"
-        payload: '/test_search_age{"age_group": "teenager"}'
+        payload: "teenager"
       - title: "Studenten"
-        payload: '/test_search_age{"age_group": "students"}'
+        payload: "students"
       - title: "Kinder"
-        payload: '/test_search_age{"age_group": "children"}'
+        payload: "children"
       - title: "Erwachsene"
-        payload: '/test_search_age{"age_group": "adults"}'
+        payload: "adults"
       - title: "Geriatrie"
-        payload: '/test_search_age{"age_group": "geriatrics"}'
+        payload: "geriatrics"
       - title: "Schüler"
-        payload: '/test_search_age{"age_group": "pupils"}'
+        payload: "pupils"
 
   utter_test_search_disorder:
   - text: "Bitte schreiben Sie eine Störung:"
