@@ -37,13 +37,13 @@ This repository contains a complete Rasa chatbot project, including Docker confi
    git clone <repository-url>
    cd <repository-folder>
 
-   Please download & add the trained [model]   (https://drive.google.com/file/d/1hmeU330TpbOvpz01qJZb8ZnJsqShgDMM/view?usp=drive_link) inside models directory.
+2. **Adding Model**: Please download & add the trained [model]   (https://drive.google.com/file/d/1hmeU330TpbOvpz01qJZb8ZnJsqShgDMM/view?usp=drive_link) inside models directory.
 
-2. **Run Docker Compose**: Start both the Rasa server and the action server
+3. **Run Docker Compose**: Start both the Rasa server and the action server
    ```bash
    docker-compose up --build
 
-3. **Access the Chatbot**: After the containers are up, you can access the chatbot frontend from the **Chatbot-widget-main** folder by hosting it on a local or remote server. If you're running the Rasa server on a remote server, it is necessary to modify the [constants.js](Chatbot-Widget-main/static/js/constants.js) and replace the localhost with the public IP address of the server.
+4. **Access the Chatbot**: After the containers are up, you can access the chatbot frontend from the **Chatbot-widget-main** folder by hosting it on a local or remote server. If you're running the Rasa server on a remote server, it is necessary to modify the [constants.js](Chatbot-Widget-main/static/js/constants.js) and replace the localhost with the public IP address of the server.
 
 Once you have you Rasa server up and running, you can test the bot by running the [index.html](Chatbot-Widget-main/index.html) file in the browser. More details on customizing the UI can be found in [README.md](Chatbot-Widget-main/static/js/constants.js) inside this folder.
 
