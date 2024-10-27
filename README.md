@@ -37,7 +37,7 @@ This repository contains a complete Rasa chatbot project, including Docker confi
    git clone <repository-url>
    cd <repository-folder>
 
-2. **Adding Model**: Please download & add the trained [model]   (https://drive.google.com/file/d/1hmeU330TpbOvpz01qJZb8ZnJsqShgDMM/view?usp=drive_link) inside models directory.
+2. **Adding Model**: Please download & add the trained [model] (https://drive.google.com/file/d/1hmeU330TpbOvpz01qJZb8ZnJsqShgDMM/view?usp=drive_link) inside models directory.
 
 3. **Run Docker Compose**: Start both the Rasa server and the action server
    ```bash
