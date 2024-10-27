@@ -42,3 +42,5 @@ This repository contains a complete Rasa chatbot project, including Docker confi
 3. **Access the Chatbot**: After the containers are up, you can access the chatbot frontend from the **Chatbot-widget-main** folder by hosting it on a local or remote server. If you're running the Rasa server on a remote server, it is necessary to modify the [constants.js](Chatbot-Widget-main/static/js/constants.js) and replace the localhost with the public IP address of the server.
 
 Once you have you Rasa server up and running, you can test the bot by running the [index.html](Chatbot-Widget-main/index.html) file in the browser. More details on customizing the UI can be found in [README.md](Chatbot-Widget-main/static/js/constants.js) inside this folder.
+
+A short [video](https://screenrec.com/share/sQSrVwHF28) to for user guidance to navigate the chatbot.
