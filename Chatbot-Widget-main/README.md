@@ -11,10 +11,6 @@
 - Quick replies
 - Bot typing indicator
 
-## Documentation
-- Check out the documentation on how to send bot response from Rasa in [response.md](docs/responses.md)
-- If you want to modify the UI elements, you can read on how to do here: [modifications.md](docs/modifications.md)
-
 ## Library used:
 - [Materialize CSS](https://materializecss.com) for CSS
 - [Showdownjs](https://github.com/showdownjs/showdown) for Markdown suppport
