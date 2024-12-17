@@ -52,12 +52,12 @@ This repository contains a complete Rasa chatbot project, including Docker confi
    rasa train --force #In case if the 1st one doesn't train the model with your updates
 
 7. **Test & rebuild in docker**: After traing the new model you can test it directly from command line using the following commnads.
-```bash
-rasa run #you can also specify the the latest model and rest api if you wan to to run it from the UI like following
-rasa run -m models --enable-api --cors "*" --debug
-rasa run –model models/20190506-100418.tar.gz #to run a specific model
-rasa run actions #for the action server or
-rasa run actions --cors "*" --debug
+   ```bash
+   rasa run #you can also specify the the latest model and rest api if you wan to to run it from the UI like following
+   rasa run -m models --enable-api --cors "*" --debug
+   rasa run –model models/20190506-100418.tar.gz #to run a specific model
+   rasa run actions #for the action server or
+   rasa run actions --cors "*" --debug
 
 You can also find more useful commands here https://rasa.com/docs/rasa/command-line-interface/
 After testing you need to rebuild the docker file again.
