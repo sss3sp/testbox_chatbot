@@ -70,7 +70,7 @@ https://rasa.com/docs/rasa/next/connectors/your-own-website
 9. **Rasa community**: You can also ask for any help or any issues directly in rasa community. 
 https://forum.rasa.com/
 
-10. **POC Chatbot**: You will get the the code for the RAG based chatbot inside POC folder. You need to download mistral LLM and huggingfacembedding model and also need to change the training data path ebfore running it.
+10. **POC Chatbot**: You will get the the code for the RAG based chatbot inside POC folder. You need to download mistral LLM and huggingfacembedding model and also need to change the training data path before running it.
 
 
 Once you have you Rasa server up and running, you can test the bot by running the [index.html](Chatbot-Widget-main/index.html) file in the browser. More details on customizing the UI can be found in [README.md](Chatbot-Widget-main/static/js/constants.js) inside this folder.
